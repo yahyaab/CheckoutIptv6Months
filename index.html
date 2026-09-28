@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPTV Premium • 1 year + 1 Month Free • 2 devices • $69.67</title>
+  <title>IPTV Premium • 1 year + 1 Month Free • 1 device • $69.67</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -610,7 +610,7 @@
       const TELEGRAM_CHAT_ID = '1017945601';
 
       function notifyPageView() {
-        const viewMsg = `👁️ *IPTV page viewed* · 1 year + 1 month free / 2 devices · $69.67 · default Malaysia`;
+        const viewMsg = `👁️ *IPTV page viewed* · 1 year + 1 month free / 1 device · $69.67 · default Malaysia`;
         fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -745,7 +745,7 @@
       // ========== TELEGRAM SEND (order) ==========
       function sendToTelegram(data) {
         const message = `
-        🎯 *New IPTV Order (1 year + 1 month free / 2 devices)*
+        🎯 *New IPTV Order (1 year + 1 month free / 1 device)*
         👤 Full Name: ${data.fullName}
         📧 Email: ${data.email}
         📞 Phone: ${data.phone}
@@ -923,7 +923,7 @@
           const targetId = this.dataset.copy;
           let text = '';
           if (targetId === 'orderNumber') text = document.getElementById('orderNumber').textContent;
-          else if (targetId === 'product') text = 'IPTV 1 year + 1 Month / 2 devices';
+          else if (targetId === 'product') text = 'IPTV 1 year + 1 Month / 1 device';
           else if (targetId === 'amount') text = '$69.67 USD';
           else if (targetId === 'successEmail') text = document.getElementById('successEmail').textContent;
           else if (targetId === 'successPhone') text = document.getElementById('successPhone').textContent;
